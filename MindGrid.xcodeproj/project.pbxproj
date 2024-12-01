@@ -29,9 +29,22 @@
 		CC6E815C2CFCC08E00AC04B8 /* MindGridUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindGridUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CC6E81802CFCE49D00AC04B8 /* Exceptions for "MindGrid" folder in "MindGrid" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CC6E81402CFCC08D00AC04B8 /* MindGrid */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CC6E81432CFCC08D00AC04B8 /* MindGrid */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CC6E81802CFCE49D00AC04B8 /* Exceptions for "MindGrid" folder in "MindGrid" target */,
+			);
 			path = MindGrid;
 			sourceTree = "<group>";
 		};
@@ -392,12 +405,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MindGrid/MindGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGrid/Preview Content\"";
 				DEVELOPMENT_TEAM = 88QL9VPLMY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindGrid/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tile Tactics";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.family-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -414,7 +428,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -433,12 +447,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MindGrid/MindGrid.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"MindGrid/Preview Content\"";
 				DEVELOPMENT_TEAM = 88QL9VPLMY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MindGrid/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Tile Tactics";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.family-games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -455,7 +470,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
