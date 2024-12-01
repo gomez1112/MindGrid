@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = true
-    @AppStorage("TimerDuration") private var timerDuration = 3
+    @AppStorage("TimerDuration") private var timerDuration = 30
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
 
@@ -64,7 +64,7 @@ struct SettingsView: View {
         .navigationTitle("Settings")
     }
     private func resetSettings() {
-        timerDuration = 3
+        timerDuration = 30
         soundEnabled = true
         hapticFeedbackEnabled = true
     }

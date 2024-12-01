@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GridView: View {
     @AppStorage("HighestScore") private var highestScore = 0
-    @AppStorage("TimerDuration") private var timerDuration = 3
+    @AppStorage("TimerDuration") private var timerDuration = 30
     @Environment(DataModel.self) private var model
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass

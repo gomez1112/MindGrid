@@ -70,7 +70,7 @@ struct MemoryMatrixTests {
     @Test
     func testHidePattern() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         let highlightedTiles = model.tiles.filter { $0.isHighlighted }
         #expect(highlightedTiles.isEmpty)

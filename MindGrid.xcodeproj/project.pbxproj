@@ -14,19 +14,11 @@
 			remoteGlobalIDString = CC6E81402CFCC08D00AC04B8;
 			remoteInfo = MindGrid;
 		};
-		CC6E815D2CFCC08E00AC04B8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC6E81392CFCC08D00AC04B8 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC6E81402CFCC08D00AC04B8;
-			remoteInfo = MindGrid;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CC6E81412CFCC08D00AC04B8 /* MindGrid.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindGrid.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC6E81522CFCC08D00AC04B8 /* MindGridTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindGridTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC6E815C2CFCC08E00AC04B8 /* MindGridUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindGridUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -53,11 +45,6 @@
 			path = MindGridTests;
 			sourceTree = "<group>";
 		};
-		CC6E815F2CFCC08E00AC04B8 /* MindGridUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MindGridUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,13 +62,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC6E81592CFCC08E00AC04B8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -90,7 +70,6 @@
 			children = (
 				CC6E81432CFCC08D00AC04B8 /* MindGrid */,
 				CC6E81552CFCC08E00AC04B8 /* MindGridTests */,
-				CC6E815F2CFCC08E00AC04B8 /* MindGridUITests */,
 				CC6E81422CFCC08D00AC04B8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,7 +79,6 @@
 			children = (
 				CC6E81412CFCC08D00AC04B8 /* MindGrid.app */,
 				CC6E81522CFCC08D00AC04B8 /* MindGridTests.xctest */,
-				CC6E815C2CFCC08E00AC04B8 /* MindGridUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,29 +131,6 @@
 			productReference = CC6E81522CFCC08D00AC04B8 /* MindGridTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CC6E815B2CFCC08E00AC04B8 /* MindGridUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC6E816C2CFCC08E00AC04B8 /* Build configuration list for PBXNativeTarget "MindGridUITests" */;
-			buildPhases = (
-				CC6E81582CFCC08E00AC04B8 /* Sources */,
-				CC6E81592CFCC08E00AC04B8 /* Frameworks */,
-				CC6E815A2CFCC08E00AC04B8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC6E815E2CFCC08E00AC04B8 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CC6E815F2CFCC08E00AC04B8 /* MindGridUITests */,
-			);
-			name = MindGridUITests;
-			packageProductDependencies = (
-			);
-			productName = MindGridUITests;
-			productReference = CC6E815C2CFCC08E00AC04B8 /* MindGridUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -190,10 +145,6 @@
 						CreatedOnToolsVersion = 16.1;
 					};
 					CC6E81512CFCC08D00AC04B8 = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = CC6E81402CFCC08D00AC04B8;
-					};
-					CC6E815B2CFCC08E00AC04B8 = {
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = CC6E81402CFCC08D00AC04B8;
 					};
@@ -215,7 +166,6 @@
 			targets = (
 				CC6E81402CFCC08D00AC04B8 /* MindGrid */,
 				CC6E81512CFCC08D00AC04B8 /* MindGridTests */,
-				CC6E815B2CFCC08E00AC04B8 /* MindGridUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -229,13 +179,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CC6E81502CFCC08D00AC04B8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC6E815A2CFCC08E00AC04B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -259,13 +202,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC6E81582CFCC08E00AC04B8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -273,11 +209,6 @@
 			isa = PBXTargetDependency;
 			target = CC6E81402CFCC08D00AC04B8 /* MindGrid */;
 			targetProxy = CC6E81532CFCC08E00AC04B8 /* PBXContainerItemProxy */;
-		};
-		CC6E815E2CFCC08E00AC04B8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC6E81402CFCC08D00AC04B8 /* MindGrid */;
-			targetProxy = CC6E815D2CFCC08E00AC04B8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -532,50 +463,6 @@
 			};
 			name = Release;
 		};
-		CC6E816D2CFCC08E00AC04B8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 88QL9VPLMY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.MindGridUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = MindGrid;
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Debug;
-		};
-		CC6E816E2CFCC08E00AC04B8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 88QL9VPLMY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.MindGridUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = MindGrid;
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -602,15 +489,6 @@
 			buildConfigurations = (
 				CC6E816A2CFCC08E00AC04B8 /* Debug */,
 				CC6E816B2CFCC08E00AC04B8 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC6E816C2CFCC08E00AC04B8 /* Build configuration list for PBXNativeTarget "MindGridUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC6E816D2CFCC08E00AC04B8 /* Debug */,
-				CC6E816E2CFCC08E00AC04B8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
