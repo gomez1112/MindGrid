@@ -7,6 +7,9 @@
 
 import AVFoundation
 import Foundation
+#if canImport(AppKit)
+import AppKit
+#endif
 
 @MainActor
 final class AudioManager {
@@ -14,6 +17,11 @@ final class AudioManager {
    private var audioPlayer: AVAudioPlayer?
     
     func playSound(_ sounName: String) {
+        #if os(macOS)
+        if let url = Bundle.main.url(forResource: sounName, withExtension: nil) {
+            NSSound(contentsOf: url, byReference: false)?.play()
+        }
+        #else
         guard let url = Bundle.main.url(forResource: sounName, withExtension: nil) else { return }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
@@ -21,5 +29,7 @@ final class AudioManager {
         } catch {
             print("Error playing sound: \(error.localizedDescription)")
         }
+        #endif
     }
 }
+

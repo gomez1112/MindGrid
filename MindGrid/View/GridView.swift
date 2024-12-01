@@ -61,6 +61,7 @@ struct GridView: View {
             }
             .buttonStyle(.plain)
             .padding(.top, 20)
+            .keyboardShortcut("r", modifiers: [.command])
         }
         .padding()
     }

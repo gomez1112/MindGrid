@@ -96,7 +96,9 @@ struct OnboardingView: View {
                 .padding()
             }
             .navigationTitle("How to Play")
+            #if !os(macOS)
             .navigationBarTitleDisplayMode(.inline)
+            #endif
         }
     }
 }

@@ -37,7 +37,7 @@ class HapticManager {
 #else
 
 class HapticManager {
-    static let shared = HapticManager()
+    @MainActor static let shared = HapticManager()
     func generateFeedback(for type: HapticFeedbackType) {
         // Haptic feedback not supported on this platform
     }

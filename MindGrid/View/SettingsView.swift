@@ -34,10 +34,11 @@ struct SettingsView: View {
                     HStack {
                         Spacer()
                         Text("Show Onboarding Again")
-                            .foregroundStyle(.blue)
+                            .foregroundStyle(Color.accentColor)
                         Spacer()
                     }
                 }
+                .buttonStyle(.plain)
             }
             Section("About") {
                 HStack {
@@ -56,12 +57,11 @@ struct SettingsView: View {
                         Spacer()
                     }
                 }
+                .buttonStyle(.plain)
             }
         }
-        .background(LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.2), .red.opacity(0.1), .blue.opacity(0.5)]), startPoint: .topLeading, endPoint: .bottomTrailing))
-        .scrollContentBackground(.hidden)
+        .formStyle(.grouped)
         .navigationTitle("Settings")
-        .background(Color(UIColor.systemGroupedBackground).ignoresSafeArea())
     }
     private func resetSettings() {
         timerDuration = 3
