@@ -80,7 +80,7 @@ struct MemoryMatrixTests {
     @Test
     func testSelectTile() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         let indexToSelect = 0
         model.selectTile(at: indexToSelect)
@@ -91,7 +91,7 @@ struct MemoryMatrixTests {
     @Test
     func testCheckResultCorrectSelection() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Select all highlighted tiles
         for (index, _) in model.tiles.enumerated() {
@@ -117,7 +117,7 @@ struct MemoryMatrixTests {
     @Test
     func testCheckResultIncorrectSelection() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Select non-highlighted tiles
         for (index, _) in model.tiles.enumerated() {
