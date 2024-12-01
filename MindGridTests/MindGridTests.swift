@@ -195,7 +195,7 @@ struct MemoryMatrixTests {
     func testTimerStartsOnUserInput() async throws {
         model.timerDuration = 5
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         #expect(model.gameState == .userInput)
         #expect(model.remainingTime == model.timerDuration)
@@ -209,7 +209,7 @@ struct MemoryMatrixTests {
     func testTimerDecrementsCorrectly() async throws {
         model.timerDuration = 3
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Wait for the timer to count down to zero
         try await Task.sleep(nanoseconds: 3_500_000_000) // Wait 3.5 seconds
@@ -221,7 +221,7 @@ struct MemoryMatrixTests {
     func testGameOverWhenTimerExpires() async throws {
         model.timerDuration = 2
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Wait for the timer to expire
         try await Task.sleep(nanoseconds: 2_500_000_000) // Wait 2.5 seconds
@@ -232,7 +232,7 @@ struct MemoryMatrixTests {
     func testTimerCancelsOnCheckResult() async throws {
         model.timerDuration = 5
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Simulate user clicking "Check Result" before timer expires
         try await Task.sleep(nanoseconds: 2_000_000_000) // Wait 2 seconds
@@ -257,7 +257,7 @@ struct MemoryMatrixTests {
     func testResetGameResetsTimer() async throws {
         model.timerDuration = 20
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_600_000_000) // Wait for pattern to hide
+        try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Simulate some time passing
         try await Task.sleep(nanoseconds: 5_000_000_000) // Wait 5 seconds
@@ -280,7 +280,7 @@ struct MemoryMatrixTests {
         #expect(model.timerTask == nil)
         
         // Wait for pattern to hide
-        try await Task.sleep(nanoseconds: 1_600_000_000)
+        try await Task.sleep(nanoseconds: 1_800_000_000)
         #expect(model.gameState == .userInput)
         #expect(model.timerTask != nil)
         
