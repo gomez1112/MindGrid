@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct SettingsView: View {
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = true
     @AppStorage("TimerDuration") private var timerDuration = 3
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
+
     var body: some View {
         Form {
             Section("Game Settings") {
@@ -25,11 +27,23 @@ struct SettingsView: View {
                 Toggle("Enable Sound", isOn: $soundEnabled)
                 Toggle("Enable Haptic Feedback", isOn: $hapticFeedbackEnabled)
             }
+            Section {
+                Button(action: {
+                    hasSeenOnboarding = false
+                }) {
+                    HStack {
+                        Spacer()
+                        Text("Show Onboarding Again")
+                            .foregroundStyle(.blue)
+                        Spacer()
+                    }
+                }
+            }
             Section("About") {
                 HStack {
                     Text("Version")
                     Spacer()
-                    Text("1.0.0")
+                    Text("1.1.1")
                         .foregroundStyle(.secondary)
                 }
             }

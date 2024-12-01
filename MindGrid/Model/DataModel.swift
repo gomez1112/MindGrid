@@ -5,12 +5,18 @@
 //  Created by Gerard Gomez on 9/15/24.
 //
 
+import AVFoundation
 import Observation
 import SwiftUI
 
 @Observable
 @MainActor
 final class DataModel {
+    @ObservationIgnored
+    @AppStorage("SoundEnabled") private var soundEnabled = true
+    @ObservationIgnored
+    @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
+
     var gridSize = 3
     var tiles: [Tile] = []
     var gameState: GameState = .start
@@ -65,6 +71,13 @@ final class DataModel {
     func selectTile(at index: Int) {
         guard gameState == .userInput else { return }
         tiles[index].isSelected.toggle()
+        if soundEnabled {
+            AudioManager.shared.playSound("titleTap.wav")
+            
+        }
+        if hapticFeedbackEnabled {
+            HapticManager.shared.generateFeedback(for: .selection)
+        }
     }
     
     func checkResult() {
@@ -86,15 +99,33 @@ final class DataModel {
         if userSelections == highlightedTileIndices {
             score += 1
             lastRoundCorrect = true
+            if soundEnabled {
+                AudioManager.shared.playSound("correct.wav")
+            }
+            if hapticFeedbackEnabled {
+                HapticManager.shared.generateFeedback(for: .success)
+            }
         } else {
             score = max(score - 1, 0)
             lastRoundCorrect = false
+            if soundEnabled {
+                AudioManager.shared.playSound("incorrect.wav")
+            }
+            if hapticFeedbackEnabled {
+                HapticManager.shared.generateFeedback(for: .error)
+            }
         }
     }
     
     func gameOver() {
         timerTask?.cancel()
         gameState = .gameOver
+        if soundEnabled {
+            AudioManager.shared.playSound("gameOver.wav")
+        }
+        if hapticFeedbackEnabled {
+            HapticManager.shared.generateFeedback(for: .error)
+        }
     }
     func resetGame() {
         score = 0

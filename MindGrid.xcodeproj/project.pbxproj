@@ -29,9 +29,22 @@
 		CC6E815C2CFCC08E00AC04B8 /* MindGridUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindGridUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CC6E81802CFCE49D00AC04B8 /* Exceptions for "MindGrid" folder in "MindGrid" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = CC6E81402CFCC08D00AC04B8 /* MindGrid */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CC6E81432CFCC08D00AC04B8 /* MindGrid */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CC6E81802CFCE49D00AC04B8 /* Exceptions for "MindGrid" folder in "MindGrid" target */,
+			);
 			path = MindGrid;
 			sourceTree = "<group>";
 		};
