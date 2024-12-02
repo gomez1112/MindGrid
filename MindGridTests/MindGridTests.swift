@@ -201,7 +201,7 @@ struct MemoryMatrixTests {
         #expect(model.remainingTime == model.timerDuration)
         
         // Wait a second and check if remaining time decreased
-        try await Task.sleep(nanoseconds: 1_100_000_000)
+        try await Task.sleep(nanoseconds: 1_000_000_000)
         #expect(model.remainingTime == model.timerDuration - 1)
     }
     
