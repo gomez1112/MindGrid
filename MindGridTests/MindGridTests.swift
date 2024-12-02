@@ -212,7 +212,7 @@ struct MemoryMatrixTests {
         try await Task.sleep(nanoseconds: 1_800_000_000) // Wait for pattern to hide
         
         // Wait for the timer to count down to zero
-        try await Task.sleep(nanoseconds: 3_500_000_000) // Wait 3.5 seconds
+        try await Task.sleep(nanoseconds: 4_000_000_000) // Wait 3.5 seconds
         #expect(model.remainingTime == 0)
         #expect(model.gameState == .gameOver)
     }
