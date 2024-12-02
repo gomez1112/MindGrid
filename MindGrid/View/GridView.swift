@@ -76,41 +76,28 @@ struct GridView: View {
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.primary)
             }
-            .padding(.top)
-            if model.gameState == .userInput {
-                Text("Time Remaining: \(model.remainingTime) sec")
-                    .font(.system(size: 18, weight: .medium))
-                    .foregroundStyle(.secondary)
-                    .padding(.top, 5)
-            }
-            GeometryReader { geometry in
-                let availableWidth = geometry.size.width
-                let availableHeight = geometry.size.height
-                let padding: CGFloat = isSmallScreen ? 10 : 20
-                let spacing: CGFloat = isSmallScreen ? 4 : 20
-                let totalSpacing = spacing * CGFloat(model.gridSize - 1)
-                let tileSize = min((availableWidth - padding * 2 - totalSpacing) / CGFloat(model.gridSize), (availableHeight - totalSpacing) / CGFloat(model.gridSize))
-                let columns = Array(repeating: GridItem(.fixed(tileSize), spacing: spacing), count: model.gridSize)
-                
-                LazyVGrid(columns: columns, spacing: spacing) {
-                    ForEach(model.tiles) { tile in
-                        TileView(tile: tile, tileSize: tileSize)
-                            .onTapGesture {
-                                if model.gameState == .userInput,
-                                   let index = model.tiles.firstIndex(where: { $0.id == tile.id }) {
-                                    model.selectTile(at: index)
-                                }
+            .padding()
+            Text("Time Remaining: \(model.remainingTime) sec")
+                .font(.system(size: 18, weight: .medium))
+                .foregroundStyle(.secondary)
+                .padding(.top, 5)
+            Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {
+                ForEach(0..<model.gridSize, id: \.self) { row in
+                    GridRow {
+                        ForEach(0..<model.gridSize, id: \.self) { column in
+                            if let tileIndex = model.tiles.firstIndex(where: { $0.id == row * model.gridSize + column}) {
+                                TileView(tile: model.tiles[tileIndex])
+                                    .onTapGesture {
+                                        if model.gameState == .userInput {
+                                            model.selectTile(at: tileIndex)
+                                        }
+                                    }
                             }
+                        }
                     }
                 }
-                #if os(macOS) || os(visionOS)
-                .padding(-10)
-                #else
-                .padding(padding)
-                #endif
-                .animation(.easeInOut, value: model.tiles)
             }
-            
+            .animation(.easeInOut, value: model.tiles)
             Spacer()
             
             switch model.gameState {
@@ -203,7 +190,7 @@ struct GridView: View {
         #if os(macOS)
         return false
         #else
-        return horizontalSizeClass == .compact && verticalSizeClass == .compact
+        return horizontalSizeClass == .compact || verticalSizeClass == .compact
         #endif
     }
 }
