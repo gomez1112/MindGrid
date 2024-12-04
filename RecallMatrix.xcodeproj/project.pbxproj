@@ -14,19 +14,11 @@
 			remoteGlobalIDString = CC4E86CE2CFFE4F900F1486A;
 			remoteInfo = RecallMatrix;
 		};
-		CC4E86EB2CFFE4FA00F1486A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CC4E86C72CFFE4F900F1486A /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = CC4E86CE2CFFE4F900F1486A;
-			remoteInfo = RecallMatrix;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		CC4E86CF2CFFE4F900F1486A /* RecallMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecallMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecallMatrixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CC4E86EA2CFFE4FA00F1486A /* RecallMatrixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecallMatrixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -38,11 +30,6 @@
 		CC4E86E32CFFE4FA00F1486A /* RecallMatrixTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = RecallMatrixTests;
-			sourceTree = "<group>";
-		};
-		CC4E86ED2CFFE4FA00F1486A /* RecallMatrixUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = RecallMatrixUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -62,13 +49,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC4E86E72CFFE4FA00F1486A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -77,7 +57,6 @@
 			children = (
 				CC4E86D12CFFE4F900F1486A /* RecallMatrix */,
 				CC4E86E32CFFE4FA00F1486A /* RecallMatrixTests */,
-				CC4E86ED2CFFE4FA00F1486A /* RecallMatrixUITests */,
 				CC4E86D02CFFE4F900F1486A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -87,7 +66,6 @@
 			children = (
 				CC4E86CF2CFFE4F900F1486A /* RecallMatrix.app */,
 				CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */,
-				CC4E86EA2CFFE4FA00F1486A /* RecallMatrixUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,29 +118,6 @@
 			productReference = CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		CC4E86E92CFFE4FA00F1486A /* RecallMatrixUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CC4E86FA2CFFE4FA00F1486A /* Build configuration list for PBXNativeTarget "RecallMatrixUITests" */;
-			buildPhases = (
-				CC4E86E62CFFE4FA00F1486A /* Sources */,
-				CC4E86E72CFFE4FA00F1486A /* Frameworks */,
-				CC4E86E82CFFE4FA00F1486A /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CC4E86EC2CFFE4FA00F1486A /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				CC4E86ED2CFFE4FA00F1486A /* RecallMatrixUITests */,
-			);
-			name = RecallMatrixUITests;
-			packageProductDependencies = (
-			);
-			productName = RecallMatrixUITests;
-			productReference = CC4E86EA2CFFE4FA00F1486A /* RecallMatrixUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -177,10 +132,6 @@
 						CreatedOnToolsVersion = 16.1;
 					};
 					CC4E86DF2CFFE4FA00F1486A = {
-						CreatedOnToolsVersion = 16.1;
-						TestTargetID = CC4E86CE2CFFE4F900F1486A;
-					};
-					CC4E86E92CFFE4FA00F1486A = {
 						CreatedOnToolsVersion = 16.1;
 						TestTargetID = CC4E86CE2CFFE4F900F1486A;
 					};
@@ -202,7 +153,6 @@
 			targets = (
 				CC4E86CE2CFFE4F900F1486A /* RecallMatrix */,
 				CC4E86DF2CFFE4FA00F1486A /* RecallMatrixTests */,
-				CC4E86E92CFFE4FA00F1486A /* RecallMatrixUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,13 +166,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CC4E86DE2CFFE4FA00F1486A /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CC4E86E82CFFE4FA00F1486A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -246,13 +189,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CC4E86E62CFFE4FA00F1486A /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -260,11 +196,6 @@
 			isa = PBXTargetDependency;
 			target = CC4E86CE2CFFE4F900F1486A /* RecallMatrix */;
 			targetProxy = CC4E86E12CFFE4FA00F1486A /* PBXContainerItemProxy */;
-		};
-		CC4E86EC2CFFE4FA00F1486A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = CC4E86CE2CFFE4F900F1486A /* RecallMatrix */;
-			targetProxy = CC4E86EB2CFFE4FA00F1486A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -396,6 +327,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Recall Matrix";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -410,7 +343,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -435,6 +368,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Recall Matrix";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -449,7 +384,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -507,50 +442,6 @@
 			};
 			name = Release;
 		};
-		CC4E86FB2CFFE4FA00F1486A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 88QL9VPLMY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrixUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = RecallMatrix;
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Debug;
-		};
-		CC4E86FC2CFFE4FA00F1486A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 88QL9VPLMY;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.1;
-				MACOSX_DEPLOYMENT_TARGET = 15.1;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrixUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_TARGET_NAME = RecallMatrix;
-				XROS_DEPLOYMENT_TARGET = 2.1;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -577,15 +468,6 @@
 			buildConfigurations = (
 				CC4E86F82CFFE4FA00F1486A /* Debug */,
 				CC4E86F92CFFE4FA00F1486A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CC4E86FA2CFFE4FA00F1486A /* Build configuration list for PBXNativeTarget "RecallMatrixUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CC4E86FB2CFFE4FA00F1486A /* Debug */,
-				CC4E86FC2CFFE4FA00F1486A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

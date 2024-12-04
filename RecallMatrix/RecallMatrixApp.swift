@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct RecallMatrixApp: App {
+    @State private var model = DataModel()
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
+        .environment(model)
     }
 }
