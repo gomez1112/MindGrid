@@ -1,6 +1,6 @@
 //
 //  SettingsView.swift
-//  MemoryMatrix
+//  RecallMatrix
 //
 //  Created by Gerard Gomez on 12/1/24.
 //
@@ -12,7 +12,8 @@ struct SettingsView: View {
     @AppStorage("TimerDuration") private var timerDuration = 30
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
-
+    @State private var isShowingResetConfirmation = false
+    
     var body: some View {
         Form {
             Section("Game Settings") {
@@ -44,12 +45,14 @@ struct SettingsView: View {
                 HStack {
                     Text("Version")
                     Spacer()
-                    Text("1.1.1")
+                    Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                         .foregroundStyle(.secondary)
                 }
             }
             Section {
-                Button(action: resetSettings) {
+                Button {
+                    isShowingResetConfirmation = true
+                } label: {
                     HStack {
                         Spacer()
                         Text("Reset Settings")
@@ -59,6 +62,12 @@ struct SettingsView: View {
                 }
                 .buttonStyle(.plain)
             }
+        }
+        .alert("Reset Settings", isPresented: $isShowingResetConfirmation) {
+            Button("Cancel", role: .cancel) {}
+            Button("Reset", role: .destructive, action: resetSettings)
+        } message: {
+            Text("Are you sure you want to reset all settings to default?")
         }
         .formStyle(.grouped)
         .navigationTitle("Settings")

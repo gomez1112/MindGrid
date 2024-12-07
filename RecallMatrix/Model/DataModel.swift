@@ -1,6 +1,6 @@
 //
 //  DataModel.swift
-//  MemoryMatrix
+//  RecallMatrix
 //
 //  Created by Gerard Gomez on 9/15/24.
 //
@@ -9,6 +9,7 @@ import AVFoundation
 import Observation
 import SwiftUI
 
+/// Represents the state and logic of the Recall Matrix game.
 @Observable
 @MainActor
 final class DataModel {
@@ -16,6 +17,7 @@ final class DataModel {
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @ObservationIgnored
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
+    
 
     var gridSize = 3
     var tiles: [Tile] = []
@@ -23,6 +25,7 @@ final class DataModel {
     var score = 0
     private let patternDisplayDuration: UInt64 = 1_500_000_000
 
+    /// Indices of tiles that are highlighted in the current pattern.
     var highlightedTileIndices: Set<Int> = []
     var roundCount = 1
     var lastRoundCorrect = false
@@ -31,7 +34,7 @@ final class DataModel {
     var timerDuration: Int = 30 // Default value, can be updated from Settings
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
-    
+    /// Starts a new round, adjusting grid size based on previous performance.
     func startNewRound() {
         if lastRoundCorrect {
             roundCount += 1
@@ -46,13 +49,13 @@ final class DataModel {
             hidePattern()
         }
     }
-    
+    /// Generates tiles and randomly highlights a subset for the pattern.
     private func generatetiles() {
-        tiles = (0..<(gridSize * gridSize)).map { Tile(id: $0 )}
+        tiles = (0..<(gridSize * gridSize)).map { Tile(id: $0 )} // Initialize tiles
         highlightedTileIndices.removeAll()
-        
+        // Determine the number of tiles to highlight (up to half the grid)
         let numberOfTilesToHighlight = Int.random(in: 1...(gridSize * gridSize) / 2)
-        
+        // Randomly select unique tile indices to highlight
         while highlightedTileIndices.count < numberOfTilesToHighlight {
             highlightedTileIndices.insert(Int.random(in: 0..<tiles.count))
         }
@@ -60,7 +63,7 @@ final class DataModel {
             tiles[index].isHighlighted = true
         }
     }
-    
+    /// Hides the pattern and transitions to user input state.
     private func hidePattern() {
         for index in tiles.indices {
             tiles[index].isHighlighted = false
@@ -68,6 +71,8 @@ final class DataModel {
         gameState = .userInput
         startTimer()
     }
+    /// Handles tile selection by the user.
+    /// - Parameter index: The index of the selected tile.
     func selectTile(at index: Int) {
         guard gameState == .userInput else { return }
         tiles[index].isSelected.toggle()
@@ -79,7 +84,7 @@ final class DataModel {
             HapticManager.shared.generateFeedback(for: .selection)
         }
     }
-    
+    /// Checks the user's selections against the highlighted pattern.
     func checkResult() {
         timerTask?.cancel()
         gameState = .result
@@ -116,7 +121,7 @@ final class DataModel {
             }
         }
     }
-    
+    /// Handles game over state when time runs out or other termination conditions are met.
     func gameOver() {
         timerTask?.cancel()
         gameState = .gameOver
@@ -136,7 +141,7 @@ final class DataModel {
         remainingTime = timerDuration
         timerTask?.cancel()
     }
-    // Timer Functions
+    /// Starts the countdown timer for the current round.
     private func startTimer() {
         remainingTime = timerDuration
         timerTask?.cancel()
@@ -155,8 +160,8 @@ final class DataModel {
             }
         }
     }
-
-    
+    /// Updates the timer duration based on user settings.
+    /// - Parameter newDuration: The new timer duration in seconds.
     func updateTimerDuration(_ newDuration: Int) {
         timerDuration = newDuration
         remainingTime = newDuration

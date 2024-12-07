@@ -1,6 +1,6 @@
 //
 //  GridView.swift
-//  MemoryMatrix
+//  RecallMatrix
 //
 //  Created by Gerard Gomez on 9/15/24.
 //

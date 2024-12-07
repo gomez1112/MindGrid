@@ -5,10 +5,9 @@
 //  Created by Gerard Gomez on 12/2/24.
 //
 
-import Foundation
-
 import SwiftUI
 
+/// A view modifier that applies a consistent background style to buttons.
 struct ButtonBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         content

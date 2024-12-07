@@ -11,18 +11,21 @@ import Foundation
 import AppKit
 #endif
 
+/// Manages audio playback across the app.
 @MainActor
 final class AudioManager {
    static let shared = AudioManager()
    private var audioPlayer: AVAudioPlayer?
     
-    func playSound(_ sounName: String) {
+    /// Plays a sound with the given name.
+    /// - Parameter soundName: The name of the sound file to play.
+    func playSound(_ soundName: String) {
         #if os(macOS)
         if let url = Bundle.main.url(forResource: sounName, withExtension: nil) {
             NSSound(contentsOf: url, byReference: false)?.play()
         }
         #else
-        guard let url = Bundle.main.url(forResource: sounName, withExtension: nil) else { return }
+        guard let url = Bundle.main.url(forResource: soundName, withExtension: nil) else { return }
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: url)
             audioPlayer?.play()

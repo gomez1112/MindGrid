@@ -10,26 +10,30 @@ import Foundation
 #if canImport(UIKit) && !os(visionOS)
 import UIKit
 
+/// Manages haptic feedback across the app.
 @MainActor
 class HapticManager {
     static let shared = HapticManager()
     
+    /// Generates haptic feedback based on the specified type.
+    /// - Parameter type: The type of haptic feedback to generate.
     func generateFeedback(for type: HapticFeedbackType) {
-        DispatchQueue.main.async {
-            switch type {
-                case .selection:
-                    let generator = UISelectionFeedbackGenerator()
-                    generator.selectionChanged()
-                case .success:
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.success)
-                case .warning:
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.warning)
-                case .error:
-                    let generator = UINotificationFeedbackGenerator()
-                    generator.notificationOccurred(.error)
-            }
+        switch type {
+            case .selection:
+                let generator = UISelectionFeedbackGenerator()
+                generator.selectionChanged()
+            case .success, .warning, .error:
+                let generator = UINotificationFeedbackGenerator()
+                switch type {
+                    case .success:
+                        generator.notificationOccurred(.success)
+                    case .warning:
+                        generator.notificationOccurred(.warning)
+                    case .error:
+                        generator.notificationOccurred(.error)
+                    default:
+                        break
+                }
         }
     }
 }

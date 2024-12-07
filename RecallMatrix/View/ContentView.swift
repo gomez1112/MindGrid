@@ -22,9 +22,12 @@ struct ContentView: View {
                 OnboardingView()
             }
             #else
-            .fullScreenCover(isPresented: .constant(!hasSeenOnboarding)) {
-                OnboardingView()
-            }
+            .fullScreenCover(isPresented: Binding<Bool>(
+                get: { !hasSeenOnboarding },
+                set: { if !$0 { hasSeenOnboarding = true
+                }})) {
+                    OnboardingView()
+                }
             #endif
         }
     }
