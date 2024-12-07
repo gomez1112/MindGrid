@@ -27,6 +27,7 @@ struct OnboardingView: View {
                         .foregroundStyle(.primary)
                         .multilineTextAlignment(.center)
                         .padding(.top)
+                        .accessibilityLabel("Welcome to Recall Matrix")
                     Spacer()
                     
                     VStack(alignment: .leading, spacing: 20) {
@@ -102,6 +103,8 @@ struct OnboardingView: View {
                     }
                     .buttonStyle(.plain)
                     .padding(.bottom)
+                    .accessibilityLabel("Get Started")
+                    .accessibilityHint("Begin using the app after viewing instructions.")
                 }
                 
                 .padding()

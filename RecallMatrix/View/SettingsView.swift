@@ -25,8 +25,14 @@ struct SettingsView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
+                .accessibilityLabel("Time per Round")
+                .accessibilityValue("\(timerDuration) seconds")
                 Toggle("Enable Sound", isOn: $soundEnabled)
+                    .accessibilityLabel("Enable Sound")
+                    .accessibilityHint("Toggle to enable or disable all game sounds.")
                 Toggle("Enable Haptic Feedback", isOn: $hapticFeedbackEnabled)
+                    .accessibilityLabel("Enable Haptic Feedback")
+                    .accessibilityHint("Toggle to enable or disable haptic vibrations.")
             }
             Section {
                 Button(action: {
@@ -40,6 +46,8 @@ struct SettingsView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Show Onboarding Again")
+                .accessibilityHint("Show the initial instructions for playing the game.")
             }
             Section("About") {
                 HStack {
@@ -48,6 +56,8 @@ struct SettingsView: View {
                     Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
                         .foregroundStyle(.secondary)
                 }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("App Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
             }
             Section {
                 Button {
@@ -61,6 +71,8 @@ struct SettingsView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Reset Settings")
+                .accessibilityHint("Reset all game settings to their defaults.")
             }
         }
         .alert("Reset Settings", isPresented: $isShowingResetConfirmation) {
@@ -71,6 +83,8 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .navigationTitle("Settings")
+        .accessibilityLabel("Settings Screen")
+        .accessibilityElement(children: .contain)
     }
     private func resetSettings() {
         timerDuration = 30

@@ -1,6 +1,6 @@
 //
 //  GridView.swift
-//  RecallMatrix
+//
 //
 //  Created by Gerard Gomez on 9/15/24.
 //
@@ -32,9 +32,11 @@ struct GridView: View {
                 } label: {
                     Image(systemName: "gear")
                 }
-
+                .accessibilityLabel("Settings")
+                .accessibilityHint("Open game settings")
             }
         }
+        .accessibilityElement(children: .contain)
     }
     var gameOverView: some View {
         VStack {
@@ -42,9 +44,12 @@ struct GridView: View {
                 .font(.system(size: 34, weight: .bold))
                 .foregroundStyle(.red)
                 .padding()
+                .accessibilityLabel("Game Over")
+                .accessibilityHint("Your final score is displayed.")
             Text("Your Highest Score: \(highestScore)")
                 .font(.system(size: 24, weight: .medium))
                 .foregroundStyle(.primary)
+                .accessibilityLabel("Your highest score is \(highestScore).")
             Spacer()
             Button {
                 withAnimation {
@@ -58,8 +63,11 @@ struct GridView: View {
             .buttonStyle(.plain)
             .padding(.top, 20)
             .keyboardShortcut("r", modifiers: [.command])
+            .accessibilityLabel("Restart game")
+            .accessibilityHint("Starts a new game from the beginning.")
         }
         .padding()
+        .accessibilityElement(children: .contain)
     }
     var gameUI: some View {
         VStack {
@@ -67,16 +75,19 @@ struct GridView: View {
                 Text("Score: \(model.score)")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.primary)
+                    .accessibilityLabel("Score: \(model.score)")
                 Spacer()
                 Text("Highest Score: \(highestScore)")
                     .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.primary)
+                    .accessibilityLabel("Highest Score: \(highestScore)")
             }
             .padding()
             Text("Time Remaining: \(model.remainingTime) sec")
                 .font(.system(size: 18, weight: .medium))
                 .foregroundStyle(.secondary)
                 .padding(.top, 5)
+                .accessibilityLabel("Time remaining: \(model.remainingTime) seconds")
             Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {
                 ForEach(0..<model.gridSize, id: \.self) { row in
                     GridRow {
@@ -88,6 +99,7 @@ struct GridView: View {
                                             model.selectTile(at: tileIndex)
                                         }
                                     }
+                                    .accessibilityLabel("Tile at position row \(row + 1), column \(column + 1)")
                             }
                         }
                     }
@@ -124,6 +136,8 @@ struct GridView: View {
                 .buttonBackground()
         }
         .accessibilityIdentifier("Start Game")
+        .accessibilityLabel("Start Game")
+        .accessibilityHint("Begins the first round.")
         .buttonStyle(.plain)
     }
     var checkResultButton: some View {
@@ -143,6 +157,8 @@ struct GridView: View {
                 .buttonBackground()
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Check Result")
+        .accessibilityHint("Check if your selected tiles match the pattern.")
     }
     var resultView: some View {
         VStack {
@@ -152,6 +168,7 @@ struct GridView: View {
                 .padding()
                 .transition(.scale)
                 .animation(.easeInOut, value: model.lastRoundCorrect)
+                .accessibilityLabel(model.lastRoundCorrect ? "Great Job! You got it correct." : "Try Again!. Your selection was incorrect.")
             
             Button {
                 withAnimation {
@@ -162,7 +179,10 @@ struct GridView: View {
                     .buttonBackground()
             }
             .buttonStyle(.plain)
+            .accessibilityLabel("Next Round")
+            .accessibilityHint("Proceed to the next round of the game.")
         }
+        .accessibilityElement(children: .contain)
     }
     var isSmallScreen: Bool {
         #if os(macOS)

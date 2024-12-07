@@ -16,6 +16,8 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 GridView()
                     .navigationTitle("Recall Matrix")
+                    .accessibilityLabel("Recall Matrix Game Screen")
+                    .accessibilityHint("Use this screen to play the game by selecting highlighted tiles.")
             }
             #if os(macOS)
             .sheet(isPresented: .constant(!hasSeenOnboarding)) {

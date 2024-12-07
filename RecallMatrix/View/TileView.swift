@@ -22,6 +22,9 @@ struct TileView: View {
             }
             .scaleEffect(tile.isSelected ? 1.05 : 1, anchor: .center)
             .accessibilityIdentifier("TileButton_\(tile.id)")
+            .accessibilityLabel(tileAccessibilityLabel)
+            .accessibilityHint("Double tap to select or deselct this tile.")
+            .accessibilityAddTraits(.isButton)
             .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: tile.isSelected)
     }
     var tileColor: LinearGradient {
@@ -41,6 +44,19 @@ struct TileView: View {
         }
     }
     
+    private var tileAccessibilityLabel: String {
+        if tile.isCorrectTile {
+            return "Correct tile selected."
+        } else if tile.isIncorrectTile {
+            return "Incorrect tile selected."
+        } else if tile.isMissed {
+            return "A highlighted tile was missed."
+        } else if tile.isSelected {
+            return "Tile selected."
+        } else {
+            return "Tile not selected"
+        }
+    }
     var cornerRadius: CGFloat {
         #if os(macOS)
         return 8
