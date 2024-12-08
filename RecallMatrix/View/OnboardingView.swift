@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
-
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @State private var mockHighlightedTiles: [Bool] = Array(repeating: false, count: 9)
+    @State private var currentStep = 1
+    @State private var isGreenPhase = false
     
     var body: some View {
         NavigationStack {
@@ -22,97 +24,166 @@ struct OnboardingView: View {
                 .ignoresSafeArea()
                 
                 VStack(spacing: 30) {
-                    Text("Welcome to Recall Matrix")
-                        .font(.system(size: 34, weight: .bold))
+                    Text("How to Play")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
                         .foregroundStyle(.primary)
-                        .multilineTextAlignment(.center)
                         .padding(.top)
-                        .accessibilityLabel("Welcome to Recall Matrix")
-                    Spacer()
                     
-                    VStack(alignment: .leading, spacing: 20) {
-                        HStack(alignment: .top) {
-                            Image(systemName: "1.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(.blue)
-                            Text("**Memorize the Pattern**\nWatch the highlighted tiles carefully when the pattern is displayed.")
-                                .font(.system(size: 18))
-                                .foregroundStyle(.primary)
-                            #if os(visionOS)
-                                .fixedSize(horizontal: false, vertical: true)
-                            #endif
-                        }
-                        HStack(alignment: .top) {
-                            Image(systemName: "2.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(.blue)
-                            Text("**Recall and Select**\nAfter the pattern disappears, select the tiles that were highlighted.")
-                                .font(.system(size: 18))
-                                .foregroundStyle(.primary)
-                            #if os(visionOS)
-                                .fixedSize(horizontal: false, vertical: true)
-                            #endif
-                        }
-                        HStack(alignment: .top) {
-                            Image(systemName: "3.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(.blue)
-                            Text("**Beat the Timer**\nPress **Check Result** before the timer runs out to see if you're correct.")
-                                .font(.system(size: 18))
-                                .foregroundStyle(.primary)
-                            #if os(visionOS)
-                                .fixedSize(horizontal: false, vertical: true)
-                            #endif
-                        }
-                        
-                        HStack(alignment: .top) {
-                            Image(systemName: "4.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(.blue)
-                            Text("**Progress and Challenge**\nAdvance through rounds to increase the grid size and test your memory!")
-                                .font(.system(size: 18))
-                                .foregroundStyle(.primary)
-                            #if os(visionOS)
-                                .fixedSize(horizontal: false, vertical: true)
-                            #endif
+                    // Step Explanation and Animation
+                    Group {
+                        if currentStep == 1 {
+                            explanationStep1
+                        } else if currentStep == 2 {
+                            explanationStep2
+                        } else {
+                            explanationStep3
                         }
                     }
                     
-                    .padding(.horizontal)
-                    
                     Spacer()
-                    
-                    Button {
-                        hasSeenOnboarding = true
-                        dismiss()
-                    } label: {
-                        Text("Get Started")
-                            .font(.system(size: 18, weight: .bold))
-                            .foregroundStyle(.white)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                LinearGradient(
-                                    colors: [.blue, .purple],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .shadow(radius: 6)
+                    // Navigation Controls
+                    HStack {
+                        if currentStep > 1 {
+                            Button {
+                                withAnimation {
+                                    currentStep -= 1
+                                }
+                            } label: {
+                                Text("Back")
+                                    .buttonBackground()
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        Spacer()
+                        if currentStep < 3 {
+                            Button {
+                                withAnimation {
+                                    currentStep += 1
+                                }
+                            } label: {
+                                Text("Next")
+                                    .buttonBackground()
+                            }
+                            .buttonStyle(.plain)
+                        } else {
+                            Button {
+                                withAnimation {
+                                    hasSeenOnboarding = true
+                                    dismiss()
+                                }
+                            } label: {
+                                Text("Get Started")
+                                    .buttonBackground()
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
-                    .buttonStyle(.plain)
-                    .padding(.bottom)
-                    .accessibilityLabel("Get Started")
-                    .accessibilityHint("Begin using the app after viewing instructions.")
                 }
-                
                 .padding()
             }
-            .navigationTitle("How to Play")
-#if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-#endif
+        }
+    }
+    
+    var explanationStep1: some View {
+        VStack(spacing: 20) {
+            Text("**Memorize the Pattern**")
+                .font(.title)
+                .foregroundStyle(.primary)
+            Text("Watch the highlighted tiles carefully.")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+            Text("**Recall and Select**")
+            Text("After the pattern disappears, select the tiles that were highlighted.")
+            mockGridView
+                .onAppear {
+                    startMockHighlighting()
+                }
+        }
+    }
+    
+    var explanationStep2: some View {
+        VStack(spacing: 20) {
+            Text("**Recall and Select**")
+                .font(.title)
+                .foregroundStyle(.primary)
+            Text("Tap the tiles you remember as highlighted.")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Image(systemName: "hand.tap")
+                .symbolEffect(.bounce)
+                .font(.system(size: 100))
+                .foregroundStyle(.purple)
+            Spacer()
+        }
+    }
+    
+    var explanationStep3: some View {
+        VStack(spacing: 20) {
+            Text("**Beat the Timer**")
+                .font(.title)
+                .foregroundStyle(.primary)
+            Text("Submit your answers before time runs out!")
+                .font(.headline)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Image(systemName: "clock.fill")
+                .symbolEffect(.rotate, options: .nonRepeating)
+                .font(.system(size: 100))
+                .foregroundStyle(.blue)
+            Spacer()
+        }
+    }
+    var mockGridView: some View {
+        VStack(spacing: 20) {
+            Text(isGreenPhase ? "You selected the correct tiles." : "Remember the yellow tiles")
+                .font(.title)
+                .foregroundStyle(isGreenPhase ? .green : .yellow)
+                .animation(.easeInOut, value: isGreenPhase)
+            
+            Grid(horizontalSpacing: 10, verticalSpacing: 10) {
+                ForEach(0..<3, id: \.self) { row in
+                    GridRow {
+                        ForEach(0..<3, id: \.self) { column in
+                            Rectangle()
+                                .foregroundStyle(
+                                    mockHighlightedTiles[row * 3 + column]
+                                    ? (isGreenPhase ? .green : .yellow)
+                                    : .gray.opacity(0.4)
+                                )
+                                .aspectRatio(1, contentMode: .fit)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func startMockHighlighting() {
+        // Randomly highlight tiles for the yellow phase
+        mockHighlightedTiles = Array(repeating: false, count: 9)
+        let numberOfTilesToHighlight = Int.random(in: 2...4)
+        for _ in 0..<numberOfTilesToHighlight {
+            let randomIndex = Int.random(in: 0..<9)
+            mockHighlightedTiles[randomIndex] = true
+        }
+        
+        // Alternate phases using DispatchQueue
+        updatePhase()
+    }
+    
+    private func updatePhase() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            isGreenPhase.toggle() // Switch between yellow and green
+            if !isGreenPhase {
+                // If switching back to yellow, randomize the tiles
+                startMockHighlighting()
+            } else {
+                // Continue toggling phases
+                updatePhase()
+            }
         }
     }
 }
@@ -120,4 +191,3 @@ struct OnboardingView: View {
 #Preview {
     OnboardingView()
 }
-

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(DataModel.self) private var model
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    var startImmediately = false
     var body: some View {
         NavigationStack {
             ZStack {
@@ -16,8 +18,11 @@ struct ContentView: View {
                     .ignoresSafeArea()
                 GridView()
                     .navigationTitle("Recall Matrix")
-                    .accessibilityLabel("Recall Matrix Game Screen")
-                    .accessibilityHint("Use this screen to play the game by selecting highlighted tiles.")
+            }
+            .onAppear {
+                if startImmediately {
+                    model.startNewRound()
+                }
             }
             #if os(macOS)
             .sheet(isPresented: .constant(!hasSeenOnboarding)) {

@@ -22,8 +22,10 @@ struct ButtonBackgroundModifier: ViewModifier {
                     endPoint: .trailing
                 )
             )
+            .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(radius: 6)
+            .contentShape(Rectangle())
     }
 }
 extension View {
