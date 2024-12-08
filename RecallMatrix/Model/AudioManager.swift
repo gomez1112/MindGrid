@@ -21,7 +21,7 @@ final class AudioManager {
     /// - Parameter soundName: The name of the sound file to play.
     func playSound(_ soundName: String) {
         #if os(macOS)
-        if let url = Bundle.main.url(forResource: sounName, withExtension: nil) {
+        if let url = Bundle.main.url(forResource: soundName, withExtension: nil) {
             NSSound(contentsOf: url, byReference: false)?.play()
         }
         #else

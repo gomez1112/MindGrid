@@ -23,7 +23,7 @@ struct TileView: View {
             .scaleEffect(tile.isSelected ? 1.05 : 1, anchor: .center)
             .accessibilityIdentifier("TileButton_\(tile.id)")
             .accessibilityLabel(tileAccessibilityLabel)
-            .accessibilityHint("Double tap to select or deselct this tile.")
+            .accessibilityHint(tile.isSelected ? "Double tap to deselect this tile." : "Double tap to select this tile.")
             .accessibilityAddTraits(.isButton)
             .animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: tile.isSelected)
     }
@@ -75,4 +75,5 @@ struct TileView: View {
 
 #Preview {
     TileView(tile: Tile(id: 1))
+        .environment(DataModel())
 }

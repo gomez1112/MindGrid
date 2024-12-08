@@ -17,7 +17,6 @@ final class DataModel {
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @ObservationIgnored
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
-    
 
     var gridSize = 3
     var tiles: [Tile] = []

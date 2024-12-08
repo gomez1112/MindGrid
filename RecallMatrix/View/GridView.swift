@@ -5,38 +5,43 @@
 //  Created by Gerard Gomez on 9/15/24.
 //
 
+import SwiftData
 import SwiftUI
 
 struct GridView: View {
+    @Environment(\.modelContext) private var context
     @AppStorage("HighestScore") private var highestScore = 0
     @AppStorage("TimerDuration") private var timerDuration = 30
     @Environment(DataModel.self) private var model
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Query private var gameSessions: [GameSession]
     
     var body: some View {
-        VStack {
-            if model.gameState == .gameOver {
-                gameOverView
-            } else {
-                gameUI
-            }
-        }
-        .onAppear {
-            model.updateTimerDuration(timerDuration)
-        }
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                NavigationLink {
-                    SettingsView()
-                } label: {
-                    Image(systemName: "gear")
+        NavigationStack {
+            VStack {
+                if model.gameState == .gameOver {
+                    gameOverView
+                } else {
+                    gameUI
                 }
-                .accessibilityLabel("Settings")
-                .accessibilityHint("Open game settings")
             }
+            .onAppear {
+                model.updateTimerDuration(timerDuration)
+            }
+            .toolbar {
+                ToolbarItem(placement: .automatic) {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                    .accessibilityLabel("Settings")
+                    .accessibilityHint("Open game settings")
+                }
+            }
+            .accessibilityElement(children: .contain)
         }
-        .accessibilityElement(children: .contain)
     }
     var gameOverView: some View {
         VStack {
@@ -51,20 +56,28 @@ struct GridView: View {
                 .foregroundStyle(.primary)
                 .accessibilityLabel("Your highest score is \(highestScore).")
             Spacer()
-            Button {
-                withAnimation {
-                    model.resetGame()
-                }
-            } label: {
-                Text("Restart")
-                    .buttonBackground()
+            HStack {
+                Button {
+                    withAnimation {
+                        model.resetGame()
+                    }
+                } label: {
+                    Text("Restart")
+                        .buttonBackground()
                     
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 20)
+                .keyboardShortcut("r", modifiers: [.command])
+                .accessibilityLabel("Restart game")
+                .accessibilityHint("Starts a new game from the beginning.")
+                NavigationLink(destination: StartScreenView()) {
+                    Text("Start Screen")
+                        .buttonBackground()
+                }
+                .buttonStyle(.plain)
+                .padding(.top, 20)
             }
-            .buttonStyle(.plain)
-            .padding(.top, 20)
-            .keyboardShortcut("r", modifiers: [.command])
-            .accessibilityLabel("Restart game")
-            .accessibilityHint("Starts a new game from the beginning.")
         }
         .padding()
         .accessibilityElement(children: .contain)
@@ -123,7 +136,7 @@ struct GridView: View {
             }
         
         }
-        .padding(.horizontal, isSmallScreen ? 20 : 40)
+        .frame(maxWidth: 600)
     }
     var startButton: some View {
         Button {
@@ -135,10 +148,12 @@ struct GridView: View {
             Text("Start Game")
                 .buttonBackground()
         }
+        .buttonStyle(.plain)
+        .controlSize(useLargeControls ? .large : .regular)
         .accessibilityIdentifier("Start Game")
         .accessibilityLabel("Start Game")
         .accessibilityHint("Begins the first round.")
-        .buttonStyle(.plain)
+  
     }
     var checkResultButton: some View {
         Button {
@@ -151,12 +166,18 @@ struct GridView: View {
             if model.score <= 0 {
                 model.gameOver()
             }
+            let correctTiles = model.tiles.filter { $0.isCorrectTile }.count
+            let totalHighlighted = model.highlightedTileIndices.count
+            let elapsedTime = Double(timerDuration - model.remainingTime)
+            
+            recordGameSession(score: model.score, gridSize: model.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
             
         } label: {
             Text("Check Result")
                 .buttonBackground()
         }
         .buttonStyle(.plain)
+        .controlSize(useLargeControls ? .large : .regular)
         .accessibilityLabel("Check Result")
         .accessibilityHint("Check if your selected tiles match the pattern.")
     }
@@ -179,10 +200,18 @@ struct GridView: View {
                     .buttonBackground()
             }
             .buttonStyle(.plain)
+            .controlSize(useLargeControls ? .large : .regular)
             .accessibilityLabel("Next Round")
             .accessibilityHint("Proceed to the next round of the game.")
         }
         .accessibilityElement(children: .contain)
+    }
+    var useLargeControls: Bool {
+        #if os(macOS) || os(visionOS)
+        return true
+        #else
+        return horizontalSizeClass == .regular && verticalSizeClass == .regular
+        #endif
     }
     var isSmallScreen: Bool {
         #if os(macOS)
@@ -191,10 +220,16 @@ struct GridView: View {
         return horizontalSizeClass == .compact || verticalSizeClass == .compact
         #endif
     }
+    func recordGameSession(score: Int, gridSize: Int, correctTiles: Int, totalTiles: Int, elapsedTime: TimeInterval) {
+        let session = GameSession(date: Date(), score: score, gridSize: gridSize, correctTiles: correctTiles, totalTiles: totalTiles, elapsedTime: elapsedTime)
+        context.insert(session)
+    }
 }
 
 #Preview {
-    GridView()
-        .environment(DataModel())
+    NavigationStack {
+        GridView()
+            .environment(DataModel())
+    }
 }
 

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct StartScreenView: View {
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @State private var isShowingStats = false
     var body: some View {
         NavigationStack {
             ZStack {
                 // Background Gradient
-                LinearGradient(gradient: Gradient(colors: [.blue.opacity(0.1), .red.opacity(0.1), .blue.opacity(0.1)]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                    .ignoresSafeArea()
+                GradientBackgroundView()
                 
                 // Main Content
                 VStack(spacing: 40) {
@@ -49,7 +50,6 @@ struct StartScreenView: View {
                             Text("Start Game")
                                 .buttonBackground()
                         }
-                        
                         NavigationLink(destination: OnboardingView()) {
                             Text("How to Play")
                                 .buttonBackground()
@@ -59,10 +59,28 @@ struct StartScreenView: View {
                             Text("Settings")
                                 .buttonBackground()
                         }
+                        NavigationLink(destination: LeaderBoardView()) {
+                            Text("Leaderboard")
+                                .buttonBackground()
+                        }
                     }
+                    .buttonStyle(.plain)
                 }
                 .padding()
                 .frame(maxWidth: 600) // Constrain width for larger screens
+            }
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        isShowingStats.toggle()
+                    } label: {
+                        Image(systemName: "chart.pie")
+                    }
+                }
+            }
+            .sheet(isPresented: $isShowingStats) {
+                StatsView()
             }
         }
     }
@@ -71,6 +89,8 @@ struct StartScreenView: View {
 
 
 #Preview {
-    StartScreenView()
-        .environment(DataModel())
+    NavigationStack {
+        StartScreenView()
+            .environment(DataModel())
+    }
 }

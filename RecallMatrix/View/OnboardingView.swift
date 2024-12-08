@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+
 struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
@@ -15,20 +16,25 @@ struct OnboardingView: View {
     @State private var currentStep = 1
     @State private var isGreenPhase = false
     
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+    
+    var useLargeControls: Bool {
+        #if os(macOS) || os(visionOS)
+        return true
+        #else
+        return horizontalSizeClass == .regular && verticalSizeClass == .regular
+        #endif
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                LinearGradient(
-                    gradient: Gradient(colors: [.blue.opacity(0.2), .red.opacity(0.1), .blue.opacity(0.5)]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
+                GradientBackgroundView()
                 
                 VStack(spacing: 30) {
                     Text("How to Play")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(.largeTitle.bold())
                         .foregroundStyle(.primary)
                         .padding(.top)
                     
@@ -56,6 +62,8 @@ struct OnboardingView: View {
                                     .buttonBackground()
                             }
                             .buttonStyle(.plain)
+                            .controlSize(useLargeControls ? .large : .regular)
+                            .accessibilityLabel("Go back to previous tutorial step.")
                         }
                         Spacer()
                         if currentStep < 3 {
@@ -68,6 +76,8 @@ struct OnboardingView: View {
                                     .buttonBackground()
                             }
                             .buttonStyle(.plain)
+                            .controlSize(useLargeControls ? .large : .regular)
+                            .accessibilityLabel("Proceed to the next tutorial step.")
                         } else {
                             Button {
                                 withAnimation {
@@ -79,10 +89,12 @@ struct OnboardingView: View {
                                     .buttonBackground()
                             }
                             .buttonStyle(.plain)
+                            .controlSize(useLargeControls ? .large : .regular)
                         }
                     }
                 }
                 .padding()
+                .frame(maxWidth: 600)
             }
         }
     }
@@ -115,7 +127,15 @@ struct OnboardingView: View {
             Image(systemName: "hand.tap")
                 .symbolEffect(.bounce)
                 .font(.system(size: 100))
-                .foregroundStyle(.purple)
+                .foregroundStyle(LinearGradient(
+                    gradient: Gradient(colors: [
+                        .blue.opacity(0.5),
+                        .red.opacity(0.5),
+                        .blue.opacity(0.5)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
             dynamicDifficultySection
         }
         .onAppear {
@@ -135,7 +155,16 @@ struct OnboardingView: View {
             Image(systemName: "clock.fill")
                 .symbolEffect(.rotate, options: .nonRepeating)
                 .font(.system(size: 100))
-                .foregroundStyle(.blue)
+                .foregroundStyle(LinearGradient(
+                    gradient: Gradient(colors: [
+                        .blue.opacity(0.5),
+                        .red.opacity(0.5),
+                        .blue.opacity(0.5)
+                    ]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                ))
+                .accessibilityLabel("Countdown icon")
             Spacer()
         }
     }
@@ -233,4 +262,5 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
+        .environment(DataModel())
 }
