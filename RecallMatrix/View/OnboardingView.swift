@@ -10,6 +10,8 @@ struct OnboardingView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @State private var mockHighlightedTiles: [Bool] = Array(repeating: false, count: 9)
+    @State private var gridSize = 3
+    @State private var isIncreasing = true
     @State private var currentStep = 1
     @State private var isGreenPhase = false
     
@@ -110,12 +112,14 @@ struct OnboardingView: View {
             Text("Tap the tiles you remember as highlighted.")
                 .font(.headline)
                 .foregroundStyle(.secondary)
-            Spacer()
             Image(systemName: "hand.tap")
                 .symbolEffect(.bounce)
                 .font(.system(size: 100))
                 .foregroundStyle(.purple)
-            Spacer()
+            dynamicDifficultySection
+        }
+        .onAppear {
+            animateGridSize()
         }
     }
     
@@ -133,6 +137,45 @@ struct OnboardingView: View {
                 .font(.system(size: 100))
                 .foregroundStyle(.blue)
             Spacer()
+        }
+    }
+    var dynamicDifficultySection: some View {
+        VStack(spacing: 20) {
+            Text("Dynamic Difficulty")
+                .font(.title.bold())
+            Text("As you progress, the grid size increases, making the game more challenging. If you miss patterns, the grid size decreases to help you improve.")
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .minimumScaleFactor(0.5)
+            VStack {
+                Text("Current Grid Size: \(gridSize) x \(gridSize)")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                Grid(horizontalSpacing: 4,verticalSpacing: 4) {
+                    ForEach(0..<gridSize, id: \.self) { row in
+                        GridRow {
+                            ForEach(0..<gridSize, id: \.self) { column in
+                                Rectangle()
+                                    .foregroundStyle(.blue.opacity(0.5))
+                                    .aspectRatio(1, contentMode: .fit)
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                            }
+                        }
+                    }
+                }
+                .animation(.easeInOut(duration: 1.5), value: gridSize)
+            }
+        }
+    }
+    private func animateGridSize() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            if isIncreasing {
+                gridSize = min(gridSize + 1, 6)
+            } else {
+                gridSize = max(gridSize - 1, 3)
+            }
+            isIncreasing.toggle()
+            animateGridSize()
         }
     }
     var mockGridView: some View {
