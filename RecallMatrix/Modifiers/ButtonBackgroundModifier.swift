@@ -15,13 +15,7 @@ struct ButtonBackgroundModifier: ViewModifier {
             .foregroundStyle(.white)
             .padding()
             .frame(maxWidth: .infinity)
-            .background(
-                LinearGradient(
-                    colors: [.blue, .purple],
-                    startPoint: .leading,
-                    endPoint: .trailing
-                )
-            )
+            .background(Constant.Style.blueToPurple)
             .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(radius: 6)

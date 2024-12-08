@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(DataModel.self) private var model
+    @Environment(GameModel.self) private var game
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     var startImmediately = false
     var body: some View {
@@ -20,7 +20,7 @@ struct ContentView: View {
             }
             .onAppear {
                 if startImmediately {
-                    model.startNewRound()
+                    game.startNewRound()
                 }
             }
             #if os(macOS)
@@ -41,5 +41,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .environment(DataModel())
+        .environment(GameModel())
 }

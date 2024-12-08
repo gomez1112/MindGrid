@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct StartScreenView: View {
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @State private var isShowingStats = false
+    @State private var isShowingAwards = false
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -22,13 +23,7 @@ struct StartScreenView: View {
                     VStack {
                         Text("Recall Matrix")
                             .font(.system(size: 40, weight: .bold))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [.blue, .purple],
-                                    startPoint: .leading,
-                                    endPoint: .trailing
-                                )
-                            )
+                            .foregroundStyle(Constant.Style.blueToPurple)
                             .multilineTextAlignment(.center)
                         
                         Text("Test Your Memory. Challenge Your Limits.")
@@ -59,23 +54,29 @@ struct StartScreenView: View {
                             Text("Settings")
                                 .buttonBackground()
                         }
-                        NavigationLink(destination: LeaderBoardView()) {
-                            Text("Leaderboard")
-                                .buttonBackground()
-                        }
                     }
                     .buttonStyle(.plain)
                 }
                 .padding()
-                .frame(maxWidth: 600) // Constrain width for larger screens
+                .frame(maxWidth: 600)
             }
             .navigationBarBackButtonHidden(true)
+            .sheet(isPresented: $isShowingAwards) {
+                AwardsView()
+            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isShowingStats.toggle()
                     } label: {
                         Image(systemName: "chart.pie")
+                    }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        isShowingAwards.toggle()
+                    } label: {
+                        Label("Show awards", systemImage: "rosette")
                     }
                 }
             }
@@ -91,6 +92,6 @@ struct StartScreenView: View {
 #Preview {
     NavigationStack {
         StartScreenView()
-            .environment(DataModel())
+            .environment(GameModel())
     }
 }

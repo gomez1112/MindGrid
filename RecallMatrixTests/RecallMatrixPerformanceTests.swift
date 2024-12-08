@@ -12,12 +12,12 @@ import XCTest
 final class RecallMatrixPerformanceTests: XCTestCase {
     
     // MARK: - Properties
-    var model: DataModel!
+    var model: GameModel!
     
     // MARK: - Setup and Teardown
     override func setUpWithError() throws {
         try super.setUpWithError()
-        model = DataModel()
+        model = GameModel()
     }
     
     override func tearDownWithError() throws {

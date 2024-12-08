@@ -1,0 +1,115 @@
+[
+    {
+        "name": "First Steps",
+        "description": "Play your first game session.",
+        "color": "Light Blue",
+        "criterion": "sessions",
+        "value": 1,
+        "image": "figure.walk"
+    },
+    {
+        "name": "Committed Gamer",
+        "description": "Play 10 game sessions.",
+        "color": "Light Blue",
+        "criterion": "sessions",
+        "value": 10,
+        "image": "gamecontroller.fill"
+    },
+    {
+        "name": "Marathon",
+        "description": "Play 50 game sessions.",
+        "color": "Light Blue",
+        "criterion": "sessions",
+        "value": 50,
+        "image": "figure.run"
+    },
+    {
+        "name": "Persistent Enthusiast",
+        "description": "Play 100 game sessions.",
+        "color": "Light Blue",
+        "criterion": "sessions",
+        "value": 100,
+        "image": "square.stack.3d.up.fill"
+    },
+    {
+        "name": "Improving Aim",
+        "description": "Achieve an accuracy of 50%.",
+        "color": "AppGreen",
+        "criterion": "accuracy",
+        "value": 50,
+        "image": "target"
+    },
+    {
+        "name": "Sharpshooter",
+        "description": "Achieve an accuracy of 75%.",
+        "color": "AppGreen",
+        "criterion": "accuracy",
+        "value": 75,
+        "image": "hand.thumbsup.fill"
+    },
+    {
+        "name": "Perfect Recall",
+        "description": "Achieve 100% accuracy.",
+        "color": "AppGreen",
+        "criterion": "accuracy",
+        "value": 100,
+        "image": "star.circle.fill"
+    },
+    {
+        "name": "Warm Up",
+        "description": "Complete a game in under 10 seconds.",
+        "color": "AppPurple",
+        "criterion": "time",
+        "value": 120,
+        "image": "clock.fill"
+    },
+    {
+        "name": "Getting Faster",
+        "description": "Complete a game in under 5 seconds.",
+        "color": "AppPurple",
+        "criterion": "time",
+        "value": 60,
+        "image": "speedometer"
+    },
+    {
+        "name": "Speed Runner",
+        "description": "Complete a game in under 3 seconds.",
+        "color": "AppPurple",
+        "criterion": "time",
+        "value": 30,
+        "image": "bolt.circle.fill"
+    },
+    {
+        "name": "Novice Grid Explorer",
+        "description": "Complete a 3x3 grid.",
+        "color": "Gold",
+        "criterion": "gridSize",
+        "value": 3,
+        "image": "rectangle.grid.3x3.fill"
+    },
+    {
+        "name": "Intermediate Grid Master",
+        "description": "Complete a 5x5 grid.",
+        "color": "Gold",
+        "criterion": "gridSize",
+        "value": 5,
+        "image": "square.grid.4x3.fill"
+    },
+    {
+        "name": "Advanced Grid Conqueror",
+        "description": "Complete an 8x8 grid.",
+        "color": "Gold",
+        "criterion": "gridSize",
+        "value": 8,
+        "image": "circle.hexagongrid"
+    },
+    {
+        "name": "Maximum Challenge",
+        "description": "Complete a 10x10 grid.",
+        "color": "Gold",
+        "criterion": "gridSize",
+        "value": 10,
+        "image": "dot.squareshape.split.2x2"
+    }
+]
+

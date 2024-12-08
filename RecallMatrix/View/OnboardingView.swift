@@ -127,15 +127,7 @@ struct OnboardingView: View {
             Image(systemName: "hand.tap")
                 .symbolEffect(.bounce)
                 .font(.system(size: 100))
-                .foregroundStyle(LinearGradient(
-                    gradient: Gradient(colors: [
-                        .blue.opacity(0.5),
-                        .red.opacity(0.5),
-                        .blue.opacity(0.5)
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
+                .foregroundStyle(Constant.Style.blueToPurple)
             dynamicDifficultySection
         }
         .onAppear {
@@ -155,15 +147,7 @@ struct OnboardingView: View {
             Image(systemName: "clock.fill")
                 .symbolEffect(.rotate, options: .nonRepeating)
                 .font(.system(size: 100))
-                .foregroundStyle(LinearGradient(
-                    gradient: Gradient(colors: [
-                        .blue.opacity(0.5),
-                        .red.opacity(0.5),
-                        .blue.opacity(0.5)
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                ))
+                .foregroundStyle(Constant.Style.blueToPurple)
                 .accessibilityLabel("Countdown icon")
             Spacer()
         }
@@ -262,5 +246,5 @@ struct OnboardingView: View {
 
 #Preview {
     OnboardingView()
-        .environment(DataModel())
+        .environment(GameModel())
 }

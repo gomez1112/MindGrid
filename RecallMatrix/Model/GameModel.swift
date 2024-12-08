@@ -7,12 +7,13 @@
 
 import AVFoundation
 import Observation
+import SwiftData
 import SwiftUI
 
 /// Represents the state and logic of the Recall Matrix game.
 @Observable
 @MainActor
-final class DataModel {
+final class GameModel {
     @ObservationIgnored
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @ObservationIgnored

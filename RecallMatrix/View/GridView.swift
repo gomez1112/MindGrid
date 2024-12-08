@@ -5,14 +5,16 @@
 //  Created by Gerard Gomez on 9/15/24.
 //
 
+import StoreKit
 import SwiftData
 import SwiftUI
 
 struct GridView: View {
+    @Environment(\.requestReview) private var requestReview
     @Environment(\.modelContext) private var context
     @AppStorage("HighestScore") private var highestScore = 0
     @AppStorage("TimerDuration") private var timerDuration = 30
-    @Environment(DataModel.self) private var model
+    @Environment(GameModel.self) private var game
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Query private var gameSessions: [GameSession]
@@ -20,14 +22,15 @@ struct GridView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if model.gameState == .gameOver {
+                if game.gameState == .gameOver {
                     gameOverView
                 } else {
                     gameUI
                 }
             }
+            .padding()
             .onAppear {
-                model.updateTimerDuration(timerDuration)
+                game.updateTimerDuration(timerDuration)
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -59,7 +62,7 @@ struct GridView: View {
             HStack {
                 Button {
                     withAnimation {
-                        model.resetGame()
+                        game.resetGame()
                     }
                 } label: {
                     Text("Restart")
@@ -85,31 +88,31 @@ struct GridView: View {
     var gameUI: some View {
         VStack {
             HStack {
-                Text("Score: \(model.score)")
+                Text("Score: \(game.score)")
                     .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(.primary)
-                    .accessibilityLabel("Score: \(model.score)")
+                    .foregroundStyle(Constant.Style.blueToPurple)
+                    .accessibilityLabel("Score: \(game.score)")
                 Spacer()
                 Text("Highest Score: \(highestScore)")
                     .font(.system(size: 24, weight: .bold))
-                    .foregroundStyle(.primary)
+                    .foregroundStyle(Constant.Style.blueToPurple)
                     .accessibilityLabel("Highest Score: \(highestScore)")
             }
             .padding()
-            Text("Time Remaining: \(model.remainingTime) sec")
+            Text("Time Remaining: \(game.remainingTime) sec")
                 .font(.system(size: 18, weight: .medium))
-                .foregroundStyle(.secondary)
+                
                 .padding(.top, 5)
-                .accessibilityLabel("Time remaining: \(model.remainingTime) seconds")
+                .accessibilityLabel("Time remaining: \(game.remainingTime) seconds")
             Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {
-                ForEach(0..<model.gridSize, id: \.self) { row in
+                ForEach(0..<game.gridSize, id: \.self) { row in
                     GridRow {
-                        ForEach(0..<model.gridSize, id: \.self) { column in
-                            if let tileIndex = model.tiles.firstIndex(where: { $0.id == row * model.gridSize + column}) {
-                                TileView(tile: model.tiles[tileIndex])
+                        ForEach(0..<game.gridSize, id: \.self) { column in
+                            if let tileIndex = game.tiles.firstIndex(where: { $0.id == row * game.gridSize + column}) {
+                                TileView(tile: game.tiles[tileIndex])
                                     .onTapGesture {
-                                        if model.gameState == .userInput {
-                                            model.selectTile(at: tileIndex)
+                                        if game.gameState == .userInput {
+                                            game.selectTile(at: tileIndex)
                                         }
                                     }
                                     .accessibilityLabel("Tile at position row \(row + 1), column \(column + 1)")
@@ -118,10 +121,10 @@ struct GridView: View {
                     }
                 }
             }
-            .animation(.easeInOut, value: model.tiles)
+            .animation(.easeInOut, value: game.tiles)
             Spacer()
             
-            switch model.gameState {
+            switch game.gameState {
                 case .start:
                     startButton
                         .padding()
@@ -141,7 +144,7 @@ struct GridView: View {
     var startButton: some View {
         Button {
             withAnimation {
-                model.startNewRound()
+                game.startNewRound()
             }
             
         } label: {
@@ -158,19 +161,20 @@ struct GridView: View {
     var checkResultButton: some View {
         Button {
             withAnimation {
-                model.checkResult()
+                game.checkResult()
             }
-            if model.score > highestScore {
-                highestScore = model.score
+            if game.score > highestScore {
+                highestScore = game.score
+                requestReview()
             }
-            if model.score <= 0 {
-                model.gameOver()
+            if game.score <= 0 {
+                game.gameOver()
             }
-            let correctTiles = model.tiles.filter { $0.isCorrectTile }.count
-            let totalHighlighted = model.highlightedTileIndices.count
-            let elapsedTime = Double(timerDuration - model.remainingTime)
+            let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
+            let totalHighlighted = game.highlightedTileIndices.count
+            let elapsedTime = Double(timerDuration - game.remainingTime)
             
-            recordGameSession(score: model.score, gridSize: model.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
+            recordGameSession(score: game.score, gridSize: game.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
             
         } label: {
             Text("Check Result")
@@ -183,17 +187,17 @@ struct GridView: View {
     }
     var resultView: some View {
         VStack {
-            Text(model.lastRoundCorrect ? "Great Job!" : "Try Again!")
+            Text(game.lastRoundCorrect ? "Great Job!" : "Try Again!")
                 .font(.system(size: 24, weight: .bold))
-                .foregroundColor(model.lastRoundCorrect ? .green : .red)
+                .foregroundColor(game.lastRoundCorrect ? .green : .red)
                 .padding()
                 .transition(.scale)
-                .animation(.easeInOut, value: model.lastRoundCorrect)
-                .accessibilityLabel(model.lastRoundCorrect ? "Great Job! You got it correct." : "Try Again!. Your selection was incorrect.")
+                .animation(.easeInOut, value: game.lastRoundCorrect)
+                .accessibilityLabel(game.lastRoundCorrect ? "Great Job! You got it correct." : "Try Again!. Your selection was incorrect.")
             
             Button {
                 withAnimation {
-                    model.startNewRound()
+                    game.startNewRound()
                 }
             } label: {
                 Text("Next Round")
@@ -229,7 +233,7 @@ struct GridView: View {
 #Preview {
     NavigationStack {
         GridView()
-            .environment(DataModel())
+            .environment(GameModel())
     }
 }
 

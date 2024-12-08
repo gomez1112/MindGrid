@@ -10,12 +10,12 @@ import SwiftUI
 
 @main
 struct RecallMatrixApp: App {
-    @State private var model = DataModel()
+    @State private var model = GameModel()
     var body: some Scene {
         WindowGroup {
             StartScreenView()
         }
-        .modelContainer(for: GameSession.self)
+        .modelContainer(ModelContainer.createContainer)
         .environment(model)
     }
 }

@@ -58,22 +58,14 @@ struct TileView: View {
         }
     }
     var cornerRadius: CGFloat {
-        #if os(macOS)
-        return 8
-        #else
-        return 12
-        #endif
+        valueFor(iOS: 12, macOS: 8, visionOS: 12)
     }
     var shadowRadius: CGFloat {
-        #if os(macOS)
-        return 4
-        #else
-        return 6
-        #endif
+        valueFor(iOS: 6, macOS: 4, visionOS: 6)
     }
 }
 
 #Preview {
     TileView(tile: Tile(id: 1))
-        .environment(DataModel())
+        .environment(GameModel())
 }

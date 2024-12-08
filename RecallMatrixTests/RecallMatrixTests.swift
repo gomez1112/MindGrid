@@ -12,10 +12,10 @@ import Testing
 struct RecallMatrixTests {
     
     // MARK: - Properties
-    var model: DataModel!
+    var model: GameModel!
     
     init() {
-        model = DataModel()
+        model = GameModel()
     }
     
     // MARK: - Tests

@@ -95,6 +95,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView()
-        .environment(DataModel())
+        .environment(GameModel())
 }
 
