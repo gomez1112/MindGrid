@@ -21,7 +21,7 @@ struct AccuracyChart: View {
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
                 .foregroundStyle(.green)
                 #if os(visionOS)
-                .symbol(Circle().strokeBorder(lineWidth: lineWidth))
+                .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))
                 #endif
             }
         }
