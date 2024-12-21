@@ -10,18 +10,13 @@ import SwiftUI
 struct ContentView: View {
     @Environment(GameModel.self) private var game
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
-    var startImmediately = false
+
     var body: some View {
         NavigationStack {
             ZStack {
-                GradientBackgroundView()
+                gradientBackground
                 GridView()
                     .navigationTitle("Recall Matrix")
-            }
-            .onAppear {
-                if startImmediately {
-                    game.startNewRound()
-                }
             }
             #if os(macOS)
             .sheet(isPresented: .constant(!hasSeenOnboarding)) {

@@ -30,7 +30,7 @@ struct OnboardingView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                GradientBackgroundView()
+                gradientBackground
                 
                 VStack(spacing: 30) {
                     Text("How to Play")

@@ -28,7 +28,7 @@ struct RecallMatrixTests {
         #expect(model.gameState == .start)
         #expect(model.score == 0)
         #expect(model.roundCount == 1)
-        #expect(model.lastRoundCorrect == false)
+        #expect(!model.lastRoundCorrect)
     }
     
     @Test

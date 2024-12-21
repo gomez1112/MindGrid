@@ -95,4 +95,17 @@ extension View {
         iOS
         #endif
     }
+    
+    var gradientBackground: some View {
+        LinearGradient(
+            gradient: Gradient(colors: [
+                .blue.opacity(0.1),
+                .red.opacity(0.1),
+                .blue.opacity(0.1)
+            ]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
 }

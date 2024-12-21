@@ -15,7 +15,7 @@ struct StatsView: View {
     @Query(sort: \GameSession.date) private var sessions: [GameSession]
     var body: some View {
         ZStack {
-            GradientBackgroundView()
+            gradientBackground
             ScrollView {
                 VStack(spacing: 30) {
                     headerTitle

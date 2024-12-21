@@ -15,7 +15,7 @@ struct StartScreenView: View {
         NavigationStack {
             ZStack {
                 // Background Gradient
-                GradientBackgroundView()
+                gradientBackground
                 
                 // Main Content
                 VStack(spacing: 40) {
@@ -41,8 +41,8 @@ struct StartScreenView: View {
                     
                     // Navigation Buttons
                     VStack(spacing: 20) {
-                        NavigationLink(destination: ContentView(startImmediately: true)) {
-                            Text("Start Game")
+                        NavigationLink(destination: ContentView()) {
+                            Text("Enter Game")
                                 .buttonBackground()
                         }
                         NavigationLink(destination: OnboardingView()) {

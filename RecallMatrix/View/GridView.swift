@@ -18,7 +18,6 @@ struct GridView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Query private var gameSessions: [GameSession]
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -29,8 +28,11 @@ struct GridView: View {
                 }
             }
             .padding()
-            .onAppear {
-                game.updateTimerDuration(timerDuration)
+            .onAppear { game.updateTimerDuration(timerDuration) }
+            .onDisappear {
+                if game.gameState == .userInput {
+                    game.gameOver()
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .automatic) {
@@ -41,6 +43,9 @@ struct GridView: View {
                     }
                     .accessibilityLabel("Settings")
                     .accessibilityHint("Open game settings")
+                    .disabled(game.gameState == .userInput)
+                    .disabled(game.gameState == .start)
+                    .disabled(game.gameState == .showingPattern)
                 }
             }
             .accessibilityElement(children: .contain)
@@ -169,12 +174,12 @@ struct GridView: View {
             }
             if game.score <= 0 {
                 game.gameOver()
+                let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
+                let totalHighlighted = game.highlightedTileIndices.count
+                let elapsedTime = Double(timerDuration - game.remainingTime)
+                
+                recordGameSession(score: game.score, gridSize: game.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
             }
-            let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
-            let totalHighlighted = game.highlightedTileIndices.count
-            let elapsedTime = Double(timerDuration - game.remainingTime)
-            
-            recordGameSession(score: game.score, gridSize: game.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
             
         } label: {
             Text("Check Result")

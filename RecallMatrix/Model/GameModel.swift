@@ -34,6 +34,7 @@ final class GameModel {
     var timerDuration: Int = 30 // Default value, can be updated from Settings
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
+    private var isPaused = false
     /// Starts a new round, adjusting grid size based on previous performance.
     func startNewRound() {
         if lastRoundCorrect {
@@ -130,6 +131,38 @@ final class GameModel {
         }
         if hapticFeedbackEnabled {
             HapticManager.shared.generateFeedback(for: .error)
+        }
+    }
+    func stopTimer() {
+        timerTask?.cancel()
+        timerTask = nil
+    }
+    func pauseTimer() {
+        isPaused = true
+        timerTask?.cancel()
+        timerTask = nil
+    }
+    /// Resume the timer **from leftover `remainingTime`** without resetting it.
+    func resumeTimer() {
+        guard timerTask == nil else { return } // already running?
+        isPaused = false
+        
+        // Create a new task that decrements remainingTime each second
+        timerTask = Task {
+            do {
+                while remainingTime > 0 && !isPaused {
+                    try await Task.sleep(nanoseconds: 1_000_000_000)
+                    if !isPaused {
+                        remainingTime -= 1
+                    }
+                }
+                // If time runs out and we're still in user input, game over
+                if gameState == .userInput && !isPaused {
+                    gameOver()
+                }
+            } catch {
+                // Handle cancellation if needed
+            }
         }
     }
     func resetGame() {

@@ -14,7 +14,7 @@ struct AccuracyChart: View {
     var body: some View {
         Chart {
             ForEach(sessions) { session in
-                LineMark(
+                PointMark(
                     x: .value("Date", session.date),
                     y: .value("Accuracy", session.accuracy * 100)
                 )

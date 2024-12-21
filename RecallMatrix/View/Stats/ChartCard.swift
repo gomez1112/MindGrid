@@ -28,17 +28,3 @@ struct ChartCard<Content: View>: View {
         .clipShape(.rect(cornerRadius: 10))
     }
 }
-
-
-//private func chartCard<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
-//    VStack(alignment: .leading) {
-//        Text(title)
-//            .font(.caption)
-//            .foregroundStyle(.secondary)
-//        content()
-//            .padding(.top, 5)
-//    }
-//    .padding()
-//    .background(.ultraThinMaterial)
-//    .clipShape(.rect(cornerRadius: 10))
-//    }
