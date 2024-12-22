@@ -33,7 +33,7 @@
     },
     {
         "name": "Improving Aim",
-        "description": "Achieve an accuracy of 50%.",
+        "description": "Achieve an accuracy of 90%.",
         "color": "AppGreen",
         "criterion": "accuracy",
         "value": 50,
@@ -41,7 +41,7 @@
     },
     {
         "name": "Sharpshooter",
-        "description": "Achieve an accuracy of 75%.",
+        "description": "Achieve an accuracy of 95%.",
         "color": "AppGreen",
         "criterion": "accuracy",
         "value": 75,
@@ -57,7 +57,7 @@
     },
     {
         "name": "Warm Up",
-        "description": "Complete a game in under 10 seconds.",
+        "description": "Complete a game in under 5 seconds.",
         "color": "AppPurple",
         "criterion": "time",
         "value": 120,
@@ -65,7 +65,7 @@
     },
     {
         "name": "Getting Faster",
-        "description": "Complete a game in under 5 seconds.",
+        "description": "Complete a game in under 2 seconds.",
         "color": "AppPurple",
         "criterion": "time",
         "value": 60,
@@ -73,7 +73,7 @@
     },
     {
         "name": "Speed Runner",
-        "description": "Complete a game in under 3 seconds.",
+        "description": "Complete a game in under 1 seconds.",
         "color": "AppPurple",
         "criterion": "time",
         "value": 30,

@@ -168,9 +168,11 @@ struct GridView: View {
             withAnimation {
                 game.checkResult()
             }
+            if game.gridSize == 10 {
+                requestReview()
+            }
             if game.score > highestScore {
                 highestScore = game.score
-                requestReview()
             }
             if game.score <= 0 {
                 game.gameOver()

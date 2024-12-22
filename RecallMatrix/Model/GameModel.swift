@@ -39,7 +39,7 @@ final class GameModel {
     func startNewRound() {
         if lastRoundCorrect {
             roundCount += 1
-            gridSize = min(gridSize + 1, 6)
+            gridSize = min(gridSize + 1, 10)
         } else {
             gridSize = max(gridSize - 1, 3)
         }
