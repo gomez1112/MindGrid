@@ -17,16 +17,16 @@ struct SettingsView: View {
     var body: some View {
         Form {
             Section("Game Settings") {
-                Stepper(value: $timerDuration, in: 5...120, step: 2) {
+                Stepper(value: $timerDuration, in: 1...120, step: 2) {
                     HStack {
                         Text("Time per Round")
                         Spacer()
-                        Text("\(timerDuration) seconds")
+                        Text("^[\(timerDuration) second](inflect: true)")
                             .foregroundStyle(.secondary)
                     }
                 }
                 .accessibilityLabel("Time per Round")
-                .accessibilityValue("\(timerDuration) seconds")
+                .accessibilityValue("^[\(timerDuration) second](inflect: true)")
                 Toggle("Enable Sound", isOn: $soundEnabled)
                     .accessibilityLabel("Enable Sound")
                     .accessibilityHint("Toggle to enable or disable all game sounds.")

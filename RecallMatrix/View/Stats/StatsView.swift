@@ -44,7 +44,7 @@ struct StatsView: View {
     }
     private var headerTitle: some View {
         Text("Your performance")
-            .font(.system(size: metric.titleFontSize, weight: .bold))
+            .font(.title.bold())
             .foregroundStyle(Constant.Style.blueToPurple)
         
     }
@@ -103,7 +103,7 @@ struct StatsView: View {
             }
         }
     }
-    private func metricCard(title: String, value: String, icon: String) -> some View {
+    private func metricCard(title: LocalizedStringKey, value: String, icon: String) -> some View {
         VStack {
             HStack {
                 Image(systemName: icon)
@@ -124,6 +124,15 @@ struct StatsView: View {
     }
 }
 
-#Preview(traits: .previewData) {
+#Preview("English", traits: .previewData) {
     StatsView()
+        .environment(\.locale, .init(identifier: "us"))
+}
+#Preview("Spanish", traits: .previewData) {
+    StatsView()
+        .environment(\.locale, .init(identifier: "es"))
+}
+#Preview("Dynamic Variants", traits: .previewData) {
+    StatsView()
+        .environment(\.dynamicTypeSize, .xxxLarge)
 }

@@ -42,6 +42,7 @@ struct AccuracyChart: View {
                 }
             }
         }
+        .frame(minWidth: 200, minHeight: 250)
     }
 }
 

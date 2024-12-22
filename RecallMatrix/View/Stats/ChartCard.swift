@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ChartCard<Content: View>: View {
-    let title: String
+    let title: LocalizedStringKey
     @ViewBuilder let content: () -> Content
     
-    init(title: String, content: @escaping () -> Content) {
+    init(title: LocalizedStringKey, content: @escaping () -> Content) {
         self.title = title
         self.content = content
     }
@@ -26,5 +26,6 @@ struct ChartCard<Content: View>: View {
         .padding()
         .background(.ultraThinMaterial)
         .clipShape(.rect(cornerRadius: 10))
+        .frame(minHeight: 300)
     }
 }
