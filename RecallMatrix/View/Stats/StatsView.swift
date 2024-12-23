@@ -14,31 +14,33 @@ struct StatsView: View {
     @State private var metric = MetricModel()
     @Query(sort: \GameSession.date) private var sessions: [GameSession]
     var body: some View {
-        ZStack {
-            gradientBackground
-            ScrollView {
-                VStack(spacing: 30) {
-                    headerTitle
-                        .padding(.top, 40)
-                    
-                    if metric.overallGamesPlayed(sessions: sessions) == 0 {
-                        ContentUnavailableView("No game sessions recorded yet.", systemImage: "chart.xyaxis.line")
-                    } else {
+        NavigationStack {
+            ZStack {
+                gradientBackground
+                ScrollView {
+                    VStack(spacing: 30) {
+                        headerTitle
+                            .padding(.top, 40)
                         
-                        contentSecion
+                        if metric.overallGamesPlayed(sessions: sessions) == 0 {
+                            ContentUnavailableView("No game sessions recorded yet.", systemImage: "chart.xyaxis.line")
+                        } else {
+                            
+                            contentSecion
+                        }
+                        Spacer()
                     }
-                    Spacer()
+                    .padding(.horizontal, metric.horizontalPadding)
                 }
-                .padding(.horizontal, metric.horizontalPadding)
             }
-        }
-        .navigationTitle("Stats")
-        #if os(iOS) || os(visionOS)
-        .navigationBarTitleDisplayMode(.inline)
-        #endif
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                Button("Dismiss", action: dismiss.callAsFunction)
+            .navigationTitle("Stats")
+#if os(iOS) || os(visionOS)
+            .navigationBarTitleDisplayMode(.inline)
+#endif
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Dismiss", action: dismiss.callAsFunction)
+                }
             }
         }
     }

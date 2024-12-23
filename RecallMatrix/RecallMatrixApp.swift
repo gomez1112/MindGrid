@@ -17,5 +17,11 @@ struct RecallMatrixApp: App {
         }
         .modelContainer(ModelContainer.createContainer)
         .environment(model)
+        
+        #if os(macOS)
+        Window("Onboarding", id: "OnboardingWindow") {
+            OnboardingView()
+        }
+        #endif
     }
 }

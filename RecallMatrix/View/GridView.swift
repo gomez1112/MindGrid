@@ -34,6 +34,7 @@ struct GridView: View {
                     game.gameOver()
                 }
             }
+            .navigationBarBackButtonHidden(game.gameState != .gameOver)
             .toolbar {
                 ToolbarItem(placement: .automatic) {
                     NavigationLink {
@@ -43,9 +44,7 @@ struct GridView: View {
                     }
                     .accessibilityLabel("Settings")
                     .accessibilityHint("Open game settings")
-                    .disabled(game.gameState == .userInput)
-                    .disabled(game.gameState == .start)
-                    .disabled(game.gameState == .showingPattern)
+                    .disabled(game.gameState != .gameOver)
                 }
             }
             .accessibilityElement(children: .contain)
@@ -54,7 +53,7 @@ struct GridView: View {
     var gameOverView: some View {
         VStack {
             Text("Game Over")
-                .font(.system(size: 34, weight: .bold))
+                .font(.title.bold())
                 .foregroundStyle(.red)
                 .padding()
                 .accessibilityLabel("Game Over")
@@ -94,19 +93,19 @@ struct GridView: View {
         VStack {
             HStack {
                 Text("Score: \(game.score)")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.title2.bold())
                     .foregroundStyle(Constant.Style.blueToPurple)
                     .accessibilityLabel("Score: \(game.score)")
                 Spacer()
                 Text("Highest Score: \(highestScore)")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.title2.bold())
                     .foregroundStyle(Constant.Style.blueToPurple)
                     .accessibilityLabel("Highest Score: \(highestScore)")
             }
             .padding()
             Text("Time Remaining: \(game.remainingTime) sec")
-                .font(.system(size: 18, weight: .medium))
-                
+                .font(.title3.weight(.medium))
+                .foregroundStyle(Constant.Style.blueToPurple)
                 .padding(.top, 5)
                 .accessibilityLabel("Time remaining: \(game.remainingTime) seconds")
             Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {

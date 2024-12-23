@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @Environment(GameModel.self) private var game
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
-
     var body: some View {
         NavigationStack {
             ZStack {
@@ -18,18 +17,12 @@ struct ContentView: View {
                 GridView()
                     .navigationTitle("Recall Matrix")
             }
-            #if os(macOS)
-            .sheet(isPresented: .constant(!hasSeenOnboarding)) {
+            .sheet(isPresented: Binding(
+                get: { !hasSeenOnboarding},
+                set: { hasSeenOnboarding = !$0 }
+            )) {
                 OnboardingView()
             }
-            #else
-            .fullScreenCover(isPresented: Binding<Bool>(
-                get: { !hasSeenOnboarding },
-                set: { if !$0 { hasSeenOnboarding = true
-                }})) {
-                    OnboardingView()
-                }
-            #endif
         }
     }
 }

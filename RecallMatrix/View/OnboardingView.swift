@@ -37,7 +37,6 @@ struct OnboardingView: View {
                         .font(.largeTitle.bold())
                         .foregroundStyle(.primary)
                         .padding(.top)
-                    
                     // Step Explanation and Animation
                     Group {
                         if currentStep == 1 {
@@ -95,8 +94,19 @@ struct OnboardingView: View {
                 }
                 .padding()
                 .frame(maxWidth: 600)
+                
+            }
+            .platform(for: .macOS) { $0.frame(minWidth: 600, minHeight: 500) }
+            .platform(for: .macOS) { $0.toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Dismiss") {
+                        dismiss()
+                    }
+                }
+            }
             }
         }
+        .frame(minWidth: 300)
     }
     
     var explanationStep1: some View {

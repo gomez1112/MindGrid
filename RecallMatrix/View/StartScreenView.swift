@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct StartScreenView: View {
+    @Environment(\.openWindow) private var openWindow
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
     @State private var isShowingStats = false
     @State private var isShowingAwards = false
     
@@ -65,24 +67,40 @@ struct StartScreenView: View {
                 AwardsView()
             }
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .automatic) {
                     Button {
                         isShowingStats.toggle()
                     } label: {
                         Image(systemName: "chart.pie")
                     }
                 }
-                ToolbarItem(placement: .confirmationAction) {
+                ToolbarItem(placement: .automatic) {
                     Button {
                         isShowingAwards.toggle()
                     } label: {
                         Label("Show awards", systemImage: "rosette")
                     }
                 }
+                ToolbarItem(placement: .automatic) {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Label("Settings", systemImage: "gear")
+                    }
+                }
             }
             .sheet(isPresented: $isShowingStats) {
                 StatsView()
             }
+        }
+        .platform(for: .macOS) { $0.frame(minWidth: 600, minHeight: 500)}
+        .onAppear {
+            #if os(macOS)
+            if !hasSeenOnboarding {
+                openWindow(id: "OnboardingWindow")
+                hasSeenOnboarding = true
+            }
+            #endif
         }
     }
 }
