@@ -786,7 +786,20 @@
       }
     },
     "Onboarding" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onboarding"
+          }
+        },
+        "es-US" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incorporación"
+          }
+        }
+      }
     },
     "Open game settings" : {
       "localizations" : {
