@@ -24,8 +24,10 @@ struct StartScreenView: View {
                     // Game Title
                     VStack {
                         Text("Recall Matrix")
-                            .font(.system(size: 40, weight: .bold))
-                            .foregroundStyle(Constant.Style.blueToPurple)
+                            .font(.largeTitle.bold())
+                            .platformNot(for: .visionOS) {
+                                $0.foregroundStyle(Constant.Style.blueToPurple)
+                            }
                             .multilineTextAlignment(.center)
                         
                         Text("Test Your Memory. Challenge Your Limits.")

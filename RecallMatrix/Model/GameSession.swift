@@ -36,5 +36,4 @@ final class GameSession {
         GameSession(date: Date().addingTimeInterval(-60*60*24), score: 300, gridSize: 16, correctTiles: 200, totalTiles: 256, elapsedTime: 30.0),
         GameSession(date: Date(), score: 400, gridSize: 32, correctTiles: 32, totalTiles: 512, elapsedTime: 40.0),
     ]
-    @MainActor static let example = examples.first!
 }

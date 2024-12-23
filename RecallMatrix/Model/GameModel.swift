@@ -137,34 +137,6 @@ final class GameModel {
         timerTask?.cancel()
         timerTask = nil
     }
-    func pauseTimer() {
-        isPaused = true
-        timerTask?.cancel()
-        timerTask = nil
-    }
-    /// Resume the timer **from leftover `remainingTime`** without resetting it.
-    func resumeTimer() {
-        guard timerTask == nil else { return } // already running?
-        isPaused = false
-        
-        // Create a new task that decrements remainingTime each second
-        timerTask = Task {
-            do {
-                while remainingTime > 0 && !isPaused {
-                    try await Task.sleep(nanoseconds: 1_000_000_000)
-                    if !isPaused {
-                        remainingTime -= 1
-                    }
-                }
-                // If time runs out and we're still in user input, game over
-                if gameState == .userInput && !isPaused {
-                    gameOver()
-                }
-            } catch {
-                // Handle cancellation if needed
-            }
-        }
-    }
     func resetGame() {
         score = 0
         roundCount = 1

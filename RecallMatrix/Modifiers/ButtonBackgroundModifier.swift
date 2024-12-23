@@ -16,7 +16,6 @@ struct ButtonBackgroundModifier: ViewModifier {
             .padding()
             .frame(maxWidth: .infinity)
             .background(Constant.Style.blueToPurple)
-            .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .shadow(radius: 6)
             .contentShape(Rectangle())

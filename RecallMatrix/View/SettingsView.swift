@@ -12,8 +12,10 @@ struct SettingsView: View {
     @AppStorage("TimerDuration") private var timerDuration = 30
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
+    @AppStorage("HighestScore") private var highestScore = 0
     @State private var isShowingResetConfirmation = false
     @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         NavigationStack {
             Form {
@@ -48,6 +50,13 @@ struct SettingsView: View {
                     .tint(.accentColor)
                     .accessibilityLabel("Show Onboarding Again")
                     .accessibilityHint("Show the initial instructions for playing the game.")
+                }
+                Section("Data Management") {
+                    Button("Clear High Score") {
+                        highestScore = 0
+                    }
+                    .foregroundStyle(Constant.Style.blueToPurple)
+                    .buttonStyle(.plain)
                 }
                 Section("About") {
                     HStack {

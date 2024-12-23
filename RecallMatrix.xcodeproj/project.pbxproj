@@ -21,9 +21,22 @@
 		CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecallMatrixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		CCE9F5172D18F0B800324203 /* Exceptions for "RecallMatrix" folder in "RecallMatrix" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			platformFiltersByRelativePath = {
+				macOS/CustomMacWindow.swift = (macos, );
+			};
+			target = CC4E86CE2CFFE4F900F1486A /* RecallMatrix */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		CC4E86D12CFFE4F900F1486A /* RecallMatrix */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				CCE9F5172D18F0B800324203 /* Exceptions for "RecallMatrix" folder in "RecallMatrix" target */,
+			);
 			path = RecallMatrix;
 			sourceTree = "<group>";
 		};

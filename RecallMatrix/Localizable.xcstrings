@@ -353,6 +353,9 @@
         }
       }
     },
+    "Clear High Score" : {
+
+    },
     "Count" : {
       "localizations" : {
         "en" : {
@@ -400,6 +403,9 @@
           }
         }
       }
+    },
+    "Data Management" : {
+
     },
     "Date" : {
       "localizations" : {

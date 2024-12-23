@@ -94,18 +94,24 @@ struct GridView: View {
             HStack {
                 Text("Score: \(game.score)")
                     .font(.title2.bold())
-                    .foregroundStyle(Constant.Style.blueToPurple)
+                    .platformNot(for: .visionOS) {
+                        $0.foregroundStyle(Constant.Style.blueToPurple)
+                    }
                     .accessibilityLabel("Score: \(game.score)")
                 Spacer()
                 Text("Highest Score: \(highestScore)")
                     .font(.title2.bold())
-                    .foregroundStyle(Constant.Style.blueToPurple)
+                    .platformNot(for: .visionOS) {
+                        $0.foregroundStyle(Constant.Style.blueToPurple)
+                    }
                     .accessibilityLabel("Highest Score: \(highestScore)")
             }
             .padding()
             Text("Time Remaining: \(game.remainingTime) sec")
                 .font(.title3.weight(.medium))
-                .foregroundStyle(Constant.Style.blueToPurple)
+                .platformNot(for: .visionOS) {
+                    $0.foregroundStyle(Constant.Style.blueToPurple)
+                }
                 .padding(.top, 5)
                 .accessibilityLabel("Time remaining: \(game.remainingTime) seconds")
             Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {

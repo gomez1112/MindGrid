@@ -19,9 +19,9 @@ struct RecallMatrixApp: App {
         .environment(model)
         
         #if os(macOS)
-        Window("Onboarding", id: "OnboardingWindow") {
-            OnboardingView()
-        }
+        CustomMacWindow(title: "Onboarding", id: "OnboardingWindow") { OnboardingView() }
+        CustomMacWindow(title: "Settings", id: "SettingsWindow") { SettingsView() }
+        CustomMacWindow(title: "Stats", id: "StatsWindow") { StatsView() }
         #endif
     }
 }
