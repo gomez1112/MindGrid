@@ -170,10 +170,10 @@ struct RecallMatrixTests {
     @Test
     func testGridSizeLimits() {
         model.lastRoundCorrect = true
-        model.gridSize = 6
+        model.gridSize = 10
         model.startNewRound()
         
-        #expect(model.gridSize == 6) // Should not exceed 6
+        #expect(model.gridSize == 10) // Should not exceed 10
         
         model.lastRoundCorrect = false
         model.gridSize = 3
