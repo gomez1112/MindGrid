@@ -41,6 +41,17 @@
                ReferencedContainer = "container:RecallMatrix.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CC198D4A2D1B0F8400374E22"
+               BuildableName = "RecallMatrixUITests.xctest"
+               BlueprintName = "RecallMatrixUITests"
+               ReferencedContainer = "container:RecallMatrix.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

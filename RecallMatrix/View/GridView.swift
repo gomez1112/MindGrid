@@ -42,6 +42,7 @@ struct GridView: View {
                     } label: {
                         Image(systemName: "gear")
                     }
+                    .accessibilityIdentifier("SettingsToolbar")
                     .accessibilityLabel("Settings")
                     .accessibilityHint("Open game settings")
                     .disabled(game.gameState != .gameOver)

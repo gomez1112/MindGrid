@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXContainerItemProxy section */
+		CC198D512D1B0F8400374E22 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CC4E86C72CFFE4F900F1486A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC4E86CE2CFFE4F900F1486A;
+			remoteInfo = RecallMatrix;
+		};
 		CC4E86E12CFFE4FA00F1486A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CC4E86C72CFFE4F900F1486A /* Project object */;
@@ -17,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC198D4B2D1B0F8400374E22 /* RecallMatrixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecallMatrixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E86CF2CFFE4F900F1486A /* RecallMatrix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecallMatrix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecallMatrixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -32,6 +40,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		CC198D4C2D1B0F8400374E22 /* RecallMatrixUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = RecallMatrixUITests;
+			sourceTree = "<group>";
+		};
 		CC4E86D12CFFE4F900F1486A /* RecallMatrix */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -48,6 +61,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CC198D482D1B0F8400374E22 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4E86CC2CFFE4F900F1486A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -70,6 +90,7 @@
 			children = (
 				CC4E86D12CFFE4F900F1486A /* RecallMatrix */,
 				CC4E86E32CFFE4FA00F1486A /* RecallMatrixTests */,
+				CC198D4C2D1B0F8400374E22 /* RecallMatrixUITests */,
 				CC4E86D02CFFE4F900F1486A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +100,7 @@
 			children = (
 				CC4E86CF2CFFE4F900F1486A /* RecallMatrix.app */,
 				CC4E86E02CFFE4FA00F1486A /* RecallMatrixTests.xctest */,
+				CC198D4B2D1B0F8400374E22 /* RecallMatrixUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +108,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CC198D4A2D1B0F8400374E22 /* RecallMatrixUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC198D532D1B0F8400374E22 /* Build configuration list for PBXNativeTarget "RecallMatrixUITests" */;
+			buildPhases = (
+				CC198D472D1B0F8400374E22 /* Sources */,
+				CC198D482D1B0F8400374E22 /* Frameworks */,
+				CC198D492D1B0F8400374E22 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC198D522D1B0F8400374E22 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CC198D4C2D1B0F8400374E22 /* RecallMatrixUITests */,
+			);
+			name = RecallMatrixUITests;
+			packageProductDependencies = (
+			);
+			productName = RecallMatrixUITests;
+			productReference = CC198D4B2D1B0F8400374E22 /* RecallMatrixUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		CC4E86CE2CFFE4F900F1486A /* RecallMatrix */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CC4E86F42CFFE4FA00F1486A /* Build configuration list for PBXNativeTarget "RecallMatrix" */;
@@ -138,9 +183,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				TargetAttributes = {
+					CC198D4A2D1B0F8400374E22 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = CC4E86CE2CFFE4F900F1486A;
+					};
 					CC4E86CE2CFFE4F900F1486A = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -177,11 +226,19 @@
 			targets = (
 				CC4E86CE2CFFE4F900F1486A /* RecallMatrix */,
 				CC4E86DF2CFFE4FA00F1486A /* RecallMatrixTests */,
+				CC198D4A2D1B0F8400374E22 /* RecallMatrixUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		CC198D492D1B0F8400374E22 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4E86CD2CFFE4F900F1486A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -199,6 +256,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CC198D472D1B0F8400374E22 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC4E86CB2CFFE4F900F1486A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,6 +280,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CC198D522D1B0F8400374E22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC4E86CE2CFFE4F900F1486A /* RecallMatrix */;
+			targetProxy = CC198D512D1B0F8400374E22 /* PBXContainerItemProxy */;
+		};
 		CC4E86E22CFFE4FA00F1486A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC4E86CE2CFFE4F900F1486A /* RecallMatrix */;
@@ -224,6 +293,50 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		CC198D542D1B0F8400374E22 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 88QL9VPLMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrixUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = RecallMatrix;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Debug;
+		};
+		CC198D552D1B0F8400374E22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 88QL9VPLMY;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.transfinite.RecallMatrixUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_TARGET_NAME = RecallMatrix;
+				XROS_DEPLOYMENT_TARGET = 2.2;
+			};
+			name = Release;
+		};
 		CC4E86F22CFFE4FA00F1486A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -351,7 +464,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RecallMatrix/RecallMatrix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RecallMatrix/Preview Content\"";
 				DEVELOPMENT_TEAM = 88QL9VPLMY;
@@ -393,7 +506,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = RecallMatrix/RecallMatrix.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"RecallMatrix/Preview Content\"";
 				DEVELOPMENT_TEAM = 88QL9VPLMY;
@@ -479,6 +592,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CC198D532D1B0F8400374E22 /* Build configuration list for PBXNativeTarget "RecallMatrixUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC198D542D1B0F8400374E22 /* Debug */,
+				CC198D552D1B0F8400374E22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CC4E86CA2CFFE4F900F1486A /* Build configuration list for PBXProject "RecallMatrix" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
