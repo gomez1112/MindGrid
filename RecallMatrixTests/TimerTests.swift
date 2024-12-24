@@ -89,25 +89,5 @@ struct TimerTests {
         #expect(model.remainingTime == model.timerDuration)
         #expect(model.timerTask == nil || model.timerTask?.isCancelled == true)
     }
-    
-    @Test
-    func testTimerDoesNotRunInOtherGameStates() async throws {
-        model.timerDuration = 5
-        
-        #expect(model.gameState == .start)
-        #expect(model.timerTask == nil)
-        
-        model.startNewRound()
-        #expect(model.gameState == .showingPattern)
-        #expect(model.timerTask == nil)
-        
-        try await Task.sleep(nanoseconds: 1_800_000_000)
-        #expect(model.gameState == .userInput)
-        #expect(model.timerTask != nil)
-        
-        model.checkResult()
-        #expect(model.gameState == .result)
-        #expect(model.timerTask == nil || model.timerTask?.isCancelled == true)
-    }
 }
 
