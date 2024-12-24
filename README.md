@@ -21,4 +21,4 @@ Contact Us
 
 If you have any questions or concerns about this Privacy Policy, please contact us:
 
-Email: gerardgomez11@outllook.com
+Email: gerardgomez11@outlook.com
