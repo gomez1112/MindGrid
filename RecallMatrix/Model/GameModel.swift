@@ -18,7 +18,9 @@ final class GameModel {
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @ObservationIgnored
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
-
+    @ObservationIgnored
+    @AppStorage("TimerDuration") var timerDuration = 30
+    
     var gridSize = 3
     var tiles: [Tile] = []
     var gameState: GameState = .start
@@ -31,7 +33,6 @@ final class GameModel {
     var lastRoundCorrect = false
     
     // Timer Properties
-    var timerDuration: Int = 30 // Default value, can be updated from Settings
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
     private var isPaused = false

@@ -9,13 +9,13 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = true
-    @AppStorage("TimerDuration") private var timerDuration = 30
     @AppStorage("SoundEnabled") private var soundEnabled = true
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
     @AppStorage("HighestScore") private var highestScore = 0
+    @AppStorage("TimerDuration") private var timerDuration = 30
     @State private var isShowingResetConfirmation = false
     @Environment(\.dismiss) private var dismiss
-    
+
     var body: some View {
         NavigationStack {
             Form {

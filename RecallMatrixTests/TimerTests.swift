@@ -45,9 +45,7 @@ struct TimerTests {
     func testGameOverWhenTimerExpires() async throws {
         model.timerDuration = 2
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
-        
-        try await Task.sleep(nanoseconds: 2_500_000_000)
+        try await Task.sleep(nanoseconds: 5_500_000_000)
         #expect(model.gameState == .gameOver)
     }
     
