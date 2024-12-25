@@ -25,7 +25,7 @@ struct TimerTests {
         #expect(model.gameState == .userInput)
         #expect(model.remainingTime == 5)
         
-        try await Task.sleep(for: .seconds(3))
+        try await Task.sleep(for: .seconds(5))
         #expect(model.remainingTime == 4)
     }
     

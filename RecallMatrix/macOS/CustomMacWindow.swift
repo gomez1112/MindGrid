@@ -29,6 +29,6 @@ struct CustomMacWindow<Content: View>: Scene {
         .defaultSize(width: 600, height: 500)
         .windowResizability(.contentSize)
         .restorationBehavior(.disabled)
-        .defaultLaunchBehavior(.presented)
+        .defaultLaunchBehavior(.suppressed)
     }
 }
