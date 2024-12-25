@@ -25,7 +25,7 @@ final class GameModel {
     var tiles: [Tile] = []
     var gameState: GameState = .start
     var score = 0
-    private let patternDisplayDuration: UInt64 = 1_500_000_000
+    private let patternDisplayDuration = 1.5
 
     /// Indices of tiles that are highlighted in the current pattern.
     var highlightedTileIndices: Set<Int> = []
@@ -47,7 +47,7 @@ final class GameModel {
         generatetiles()
         gameState = .showingPattern
         Task {
-            try await Task.sleep(nanoseconds: patternDisplayDuration)
+            try await Task.sleep(for: .seconds(patternDisplayDuration))
             hidePattern()
         }
     }
@@ -66,7 +66,7 @@ final class GameModel {
         }
     }
     /// Hides the pattern and transitions to user input state.
-    private func hidePattern() {
+    func hidePattern() {
         for index in tiles.indices {
             tiles[index].isHighlighted = false
         }
@@ -154,7 +154,7 @@ final class GameModel {
         timerTask = Task {
             do {
                 while remainingTime > 0 {
-                    try await Task.sleep(nanoseconds: 1_000_000_000) // Sleep for 1 second
+                    try await Task.sleep(for: .seconds(1))
                     remainingTime -= 1
                 }
                 if gameState == .userInput {

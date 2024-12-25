@@ -21,22 +21,20 @@ struct TimerTests {
     func testTimerStartsOnUserInput() async throws {
         model.timerDuration = 5
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
-        
+        model.hidePattern()
         #expect(model.gameState == .userInput)
-        #expect(model.remainingTime == model.timerDuration)
+        #expect(model.remainingTime == 5)
         
-        try await Task.sleep(nanoseconds: 1_000_000_000)
-        #expect(model.remainingTime == model.timerDuration - 1)
+        try await Task.sleep(for: .seconds(3))
+        #expect(model.remainingTime == 4)
     }
     
     @Test
     func testTimerDecrementsCorrectly() async throws {
         model.timerDuration = 3
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
-        
-        try await Task.sleep(nanoseconds: 4_000_000_000)
+        model.hidePattern()
+        try await Task.sleep(for: .seconds(5))
         #expect(model.remainingTime == 0)
         #expect(model.gameState == .gameOver)
     }
@@ -45,7 +43,8 @@ struct TimerTests {
     func testGameOverWhenTimerExpires() async throws {
         model.timerDuration = 2
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 5_500_000_000)
+        model.hidePattern()
+        try await Task.sleep(for: .seconds(5))
         #expect(model.gameState == .gameOver)
     }
     
@@ -53,16 +52,17 @@ struct TimerTests {
     func testTimerCancelsOnCheckResult() async throws {
         model.timerDuration = 5
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        model.hidePattern()
+        try await Task.sleep(for: .seconds(2.8))
         
         // Simulate user clicking "Check Result"
-        try await Task.sleep(nanoseconds: 2_000_000_000)
+        try await Task.sleep(for: .seconds(2))
         model.checkResult()
         #expect(model.gameState == .result)
         
         // Check if timer has stopped
         let remainingTimeAfterCheck = model.remainingTime
-        try await Task.sleep(nanoseconds: 3_000_000_000)
+        try await Task.sleep(for: .seconds(3))
         #expect(model.remainingTime == remainingTimeAfterCheck)
     }
     
@@ -78,10 +78,10 @@ struct TimerTests {
     func testResetGameResetsTimer() async throws {
         model.timerDuration = 20
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        try await Task.sleep(for: .seconds(2.8))
         
         // Simulate some time passing
-        try await Task.sleep(nanoseconds: 5_000_000_000)
+        try await Task.sleep(for: .seconds(5))
         model.resetGame()
         
         #expect(model.remainingTime == model.timerDuration)

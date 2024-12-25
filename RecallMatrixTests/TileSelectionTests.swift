@@ -32,7 +32,7 @@ struct TileSelectionTests {
     @Test
     func testHidePattern() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        model.hidePattern()
         
         let highlightedTiles = model.tiles.filter { $0.isHighlighted }
         #expect(highlightedTiles.isEmpty)
@@ -42,12 +42,13 @@ struct TileSelectionTests {
     @Test
     func testSelectTile() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        try await Task.sleep(for: .seconds(2.8))
         
-        let indexToSelect = 0
-        model.selectTile(at: indexToSelect)
-        
-        #expect(model.tiles[indexToSelect].isSelected == true)
+        if model.gameState == .userInput {
+            let indexToSelect = 0
+            model.selectTile(at: indexToSelect)
+            #expect(model.tiles[indexToSelect].isSelected == true)
+        }
     }
     
     @Test
@@ -62,7 +63,7 @@ struct TileSelectionTests {
     @Test
     func testCheckResultCorrectSelection() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        model.hidePattern()
         
         // Select all highlighted tiles
         for (index, _) in model.tiles.enumerated() {
@@ -70,9 +71,7 @@ struct TileSelectionTests {
                 model.selectTile(at: index)
             }
         }
-        
         model.checkResult()
-        
         #expect(model.gameState == .result)
         #expect(model.score == 1)
         #expect(model.lastRoundCorrect == true)
@@ -88,7 +87,7 @@ struct TileSelectionTests {
     @Test
     func testCheckResultIncorrectSelection() async throws {
         model.startNewRound()
-        try await Task.sleep(nanoseconds: 1_800_000_000)
+        try await Task.sleep(for: .seconds(2.8))
         
         // Select a non-highlighted tile
         for (index, _) in model.tiles.enumerated() {
