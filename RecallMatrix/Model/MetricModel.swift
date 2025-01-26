@@ -17,7 +17,13 @@ import Observation
             }
             .sorted(by: { $0.day < $1.day })
     }
-
+    func filterLastFiveDaysSessions(from sessions: [GameSession]) -> [GameSession] {
+        let fiveDaysAgo = Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date()
+        return sessions.filter { $0.date >= fiveDaysAgo }
+    }
+    func last5DaysSessions(sessions: [GameSession]) -> [(day: Date, count: Int)] {
+        countsByDay(sessions: filterLastFiveDaysSessions(from: sessions))
+    }
     private func averageAccuracy(sessions: [GameSession]) -> Double {
         guard !sessions.isEmpty else { return 0 }
         let totalAccuracy = sessions.reduce(0.0) { $0 + $1.accuracy }

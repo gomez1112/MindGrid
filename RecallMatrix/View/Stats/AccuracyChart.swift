@@ -11,9 +11,10 @@ import SwiftUI
 struct AccuracyChart: View {
     let metric: MetricModel
     let sessions: [GameSession]
+    
     var body: some View {
         Chart {
-            ForEach(sessions) { session in
+            ForEach(metric.filterLastFiveDaysSessions(from: sessions)) { session in
                 PointMark(
                     x: .value("Date", session.date),
                     y: .value("Accuracy", session.accuracy * 100)

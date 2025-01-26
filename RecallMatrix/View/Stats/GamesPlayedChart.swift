@@ -11,9 +11,10 @@ import SwiftUI
 struct GamesPlayedChart: View {
     let metric: MetricModel
     let sessions: [GameSession]
+
     var body: some View {
         Chart {
-            ForEach(metric.countsByDay(sessions: sessions), id: \.day) { entry in
+            ForEach(metric.last5DaysSessions(sessions: sessions), id: \.day) { entry in
                 BarMark(
                     x: .value("Date", entry.day),
                     y: .value("Count", entry.count)

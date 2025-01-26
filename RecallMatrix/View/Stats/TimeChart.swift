@@ -13,7 +13,7 @@ struct TimeChart: View {
     let sessions: [GameSession]
     var body: some View {
         Chart {
-            ForEach(sessions) { session in
+            ForEach(metric.filterLastFiveDaysSessions(from: sessions)) { session in
                 LineMark(
                     x: .value("Date", session.date),
                     y: .value("Time (sec)", session.elapsedTime)

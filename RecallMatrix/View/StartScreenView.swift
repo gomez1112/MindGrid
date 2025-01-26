@@ -109,7 +109,7 @@ struct StartScreenView: View {
 
 
 
-#Preview {
+#Preview(traits: .previewData) {
     NavigationStack {
         StartScreenView()
             .environment(GameModel())
