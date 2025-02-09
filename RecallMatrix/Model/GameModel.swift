@@ -20,13 +20,15 @@ final class GameModel {
     @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
     @ObservationIgnored
     @AppStorage("TimerDuration") var timerDuration = 30
-    
+
     var gridSize = 3
     var tiles: [Tile] = []
     var gameState: GameState = .start
     var score = 0
     private let patternDisplayDuration = 1.5
-
+    init() {
+        self.remainingTime = timerDuration
+    }
     /// Indices of tiles that are highlighted in the current pattern.
     var highlightedTileIndices: Set<Int> = []
     var roundCount = 1
@@ -36,15 +38,17 @@ final class GameModel {
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
     private var isPaused = false
+    var paused: Bool { isPaused }
     /// Starts a new round, adjusting grid size based on previous performance.
     func startNewRound() {
+        stopTimer()
         if lastRoundCorrect {
             roundCount += 1
             gridSize = min(gridSize + 1, 10)
         } else {
             gridSize = max(gridSize - 1, 3)
         }
-        generatetiles()
+        generateTiles()
         gameState = .showingPattern
         Task {
             try await Task.sleep(for: .seconds(patternDisplayDuration))
@@ -52,7 +56,7 @@ final class GameModel {
         }
     }
     /// Generates tiles and randomly highlights a subset for the pattern.
-    private func generatetiles() {
+    private func generateTiles() {
         tiles = (0..<(gridSize * gridSize)).map { Tile(id: $0 )} // Initialize tiles
         highlightedTileIndices.removeAll()
         // Determine the number of tiles to highlight (up to half the grid)
@@ -146,6 +150,8 @@ final class GameModel {
         gameState = .start
         remainingTime = timerDuration
         timerTask?.cancel()
+        stopTimer()
+        isPaused = false
     }
     /// Starts the countdown timer for the current round.
     private func startTimer() {
@@ -165,6 +171,36 @@ final class GameModel {
                 // For CancellationError, you can simply ignore it
             }
         }
+    }
+    /// Resumes the timer from the current remaining time (without resetting)
+    private func resumeTimer() {
+        timerTask?.cancel()
+        timerTask = Task {
+            do {
+                while remainingTime > 0 {
+                    try await Task.sleep(for: .seconds(1))
+                    remainingTime -= 1
+                }
+                if gameState == .userInput {
+                    gameOver()
+                }
+            } catch {
+                // Handle cancellation if needed.
+            }
+        }
+    }
+    /// Pauses the game during the user input phase.
+    func pauseGame() {
+        guard gameState == .userInput, !isPaused else { return }
+        isPaused = true
+        timerTask?.cancel()
+        timerTask = nil
+    }
+    /// Resumes the game from a paused state.
+    func resumeGame() {
+        guard gameState == .userInput, isPaused else { return }
+        isPaused = false
+        resumeTimer()
     }
     /// Updates the timer duration based on user settings.
     /// - Parameter newDuration: The new timer duration in seconds.

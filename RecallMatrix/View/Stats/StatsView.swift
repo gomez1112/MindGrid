@@ -26,7 +26,7 @@ struct StatsView: View {
                             ContentUnavailableView("No game sessions recorded yet.", systemImage: "chart.xyaxis.line")
                         } else {
                             
-                            contentSecion
+                            contentSection
                         }
                         Spacer()
                     }
@@ -50,7 +50,7 @@ struct StatsView: View {
             .foregroundStyle(Constant.Style.blueToPurple)
         
     }
-    private var contentSecion: some View {
+    private var contentSection: some View {
         VStack(spacing: 20) {
             metricsSection
                 .padding(.top)

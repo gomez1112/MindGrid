@@ -134,7 +134,11 @@ struct GridView: View {
             }
             .animation(.easeInOut, value: game.tiles)
             Spacer()
-            
+            // Show Pause/Resume button only when in user input state.
+            if game.gameState == .userInput {
+                pauseResumeButton
+                    .padding()
+            }
             switch game.gameState {
                 case .start:
                     startButton
@@ -148,10 +152,31 @@ struct GridView: View {
                 default:
                     EmptyView()
             }
-        
         }
         .frame(maxWidth: 600)
     }
+    @ViewBuilder
+    var pauseResumeButton: some View {
+        // This button is only visible during the user input phase.
+        if game.gameState == .userInput {
+            Button {
+                if game.paused {
+                    game.resumeGame()
+                } else {
+                    game.pauseGame()
+                }
+            } label: {
+                Text(game.paused ? "Resume" : "Pause")
+                    .buttonBackground()
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("PauseResumeButton")
+            .accessibilityLabel(game.paused ? "Resume Game" : "Pause Game")
+        } else {
+            EmptyView()
+        }
+    }
+
     var startButton: some View {
         Button {
             withAnimation {
