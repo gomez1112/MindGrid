@@ -205,13 +205,21 @@ struct GridView: View {
             if game.score > highestScore {
                 highestScore = game.score
             }
+            // Record EVERY session, not just game over
+            let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
+            let totalHighlighted = game.highlightedTileIndices.count
+            let elapsedTime = Double(timerDuration - game.remainingTime)
+            recordGameSession(
+                score: game.score,
+                gridSize: game.gridSize,
+                correctTiles: correctTiles,
+                totalTiles: totalHighlighted,
+                elapsedTime: elapsedTime
+            )
+            
+            // If game is over, call gameOver
             if game.score <= 0 {
                 game.gameOver()
-                let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
-                let totalHighlighted = game.highlightedTileIndices.count
-                let elapsedTime = Double(timerDuration - game.remainingTime)
-                
-                recordGameSession(score: game.score, gridSize: game.gridSize, correctTiles: correctTiles, totalTiles: totalHighlighted, elapsedTime: elapsedTime)
             }
             
         } label: {

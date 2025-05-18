@@ -823,6 +823,12 @@
         }
       }
     },
+    "Pause" : {
+
+    },
+    "Pause Game" : {
+
+    },
     "Performance Trends" : {
       "localizations" : {
         "en" : {
@@ -982,6 +988,12 @@
           }
         }
       }
+    },
+    "Resume" : {
+
+    },
+    "Resume Game" : {
+
     },
     "Score: %lld" : {
       "localizations" : {
