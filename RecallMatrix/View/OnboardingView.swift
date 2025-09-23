@@ -19,6 +19,8 @@ struct OnboardingView: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     
+    @State private var onboardingActive = true
+    
     var useLargeControls: Bool {
         #if os(macOS) || os(visionOS)
         return true
@@ -107,6 +109,14 @@ struct OnboardingView: View {
             }
         }
         .frame(minWidth: 300)
+        .onAppear {
+            onboardingActive = true
+            startMockHighlighting()
+            animateGridSize()
+        }
+        .onDisappear {
+            onboardingActive = false
+        }
     }
     
     var explanationStep1: some View {
@@ -191,7 +201,9 @@ struct OnboardingView: View {
         }
     }
     private func animateGridSize() {
+        guard onboardingActive else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            guard onboardingActive else { return}
             if isIncreasing {
                 gridSize = min(gridSize + 1, 6)
             } else {
@@ -241,7 +253,9 @@ struct OnboardingView: View {
     }
     
     private func updatePhase() {
+        guard onboardingActive else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            guard onboardingActive else { return }
             isGreenPhase.toggle() // Switch between yellow and green
             if !isGreenPhase {
                 // If switching back to yellow, randomize the tiles

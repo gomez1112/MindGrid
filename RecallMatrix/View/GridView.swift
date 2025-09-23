@@ -19,7 +19,6 @@ struct GridView: View {
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Query private var gameSessions: [GameSession]
     var body: some View {
-        NavigationStack {
             VStack {
                 if game.gameState == .gameOver {
                     gameOverView
@@ -35,21 +34,8 @@ struct GridView: View {
                 }
             }
             .navigationBarBackButtonHidden(game.gameState != .gameOver)
-            .toolbar {
-                ToolbarItem(placement: .automatic) {
-                    NavigationLink {
-                        SettingsView()
-                    } label: {
-                        Image(systemName: "gear")
-                    }
-                    .accessibilityIdentifier("SettingsToolbar")
-                    .accessibilityLabel("Settings")
-                    .accessibilityHint("Open game settings")
-                    .disabled(game.gameState != .gameOver)
-                }
-            }
             .accessibilityElement(children: .contain)
-        }
+        
     }
     var gameOverView: some View {
         VStack {

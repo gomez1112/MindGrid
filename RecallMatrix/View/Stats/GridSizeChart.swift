@@ -20,6 +20,7 @@ struct GridSizeChart: View {
                     y: .value("Grid Size", session.gridSize)
                 )
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
+                .interpolationMethod(.catmullRom)
                 .foregroundStyle(.blue)
                 #if os(visionOS)
                 .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))

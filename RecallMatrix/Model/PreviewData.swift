@@ -13,7 +13,7 @@ struct PreviewData: PreviewModifier {
     static func makeSharedContext() async throws -> ModelContainer {
         let schema = Schema([GameSession.self])
         let configuration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: schema, configurations: configuration)
+        let container = try ModelContainer(for: schema, configurations: [configuration])
         let gameSessions = GameSession.examples
         
         gameSessions.forEach { container.mainContext.insert($0) }

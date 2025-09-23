@@ -69,6 +69,7 @@ struct StartScreenView: View {
                 AwardsView()
             }
             .toolbar {
+                
                 ToolbarItem(placement: .automatic) {
                     Button {
                         isShowingStats.toggle()
@@ -76,6 +77,7 @@ struct StartScreenView: View {
                         Image(systemName: "chart.pie")
                     }
                 }
+                ToolbarSpacer(.fixed)
                 ToolbarItem(placement: .automatic) {
                     Button {
                         isShowingAwards.toggle()
@@ -83,6 +85,7 @@ struct StartScreenView: View {
                         Label("Show awards", systemImage: "rosette")
                     }
                 }
+                ToolbarSpacer(.fixed)
                 ToolbarItem(placement: .automatic) {
                     NavigationLink {
                         SettingsView()

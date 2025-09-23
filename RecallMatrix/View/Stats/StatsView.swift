@@ -39,7 +39,7 @@ struct StatsView: View {
 #endif
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Dismiss", action: dismiss.callAsFunction)
+                    Button(role: .close, action: dismiss.callAsFunction)
                 }
             }
         }
@@ -128,7 +128,6 @@ struct StatsView: View {
 
 #Preview("English", traits: .previewData) {
     StatsView()
-        .environment(\.locale, .init(identifier: "us"))
 }
 #Preview("Spanish", traits: .previewData) {
     StatsView()

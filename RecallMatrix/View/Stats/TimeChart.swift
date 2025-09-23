@@ -19,6 +19,7 @@ struct TimeChart: View {
                     y: .value("Time (sec)", session.elapsedTime)
                 )
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
+                .interpolationMethod(.catmullRom)
                 .foregroundStyle(.pink)
                 #if os(visionOS)
                 .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))

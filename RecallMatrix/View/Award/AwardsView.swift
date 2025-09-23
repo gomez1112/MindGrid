@@ -29,7 +29,7 @@ struct AwardsView: View {
                 .navigationTitle("Awards")
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Dismiss", action: dismiss.callAsFunction)
+                        Button(role: .close, action: dismiss.callAsFunction)
                     }
                 }
                 .alert(awardTitle, isPresented: $isShowingAwardDetails) {

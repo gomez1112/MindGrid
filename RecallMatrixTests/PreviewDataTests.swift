@@ -20,10 +20,6 @@ struct PreviewDataTests {
         // Given/When
         let container = try await PreviewData.makeSharedContext()
         
-        // Then
-        // Check that container is not nil
-        try #require(container != nil, "Container should have a mainContext")
-        
         // Confirm the example sessions were inserted
         // You can do this if your test has read/write access to container.mainContext:
         let fetchRequest = FetchDescriptor<GameSession>()

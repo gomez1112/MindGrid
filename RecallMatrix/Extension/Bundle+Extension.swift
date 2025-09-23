@@ -46,4 +46,8 @@ extension Bundle {
             fatalError("Failed to decode \(fileURL) from bundle: \(error.localizedDescription)")
         }
     }
+    
+    func decodeIfPresent<T: Decodable>(_ file: String, as: T.Type = T.self) -> T? {
+        load(file, as: T.self)
+    }
 }

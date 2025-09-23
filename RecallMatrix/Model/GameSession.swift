@@ -10,6 +10,7 @@ import SwiftData
 
 @Model
 final class GameSession {
+    #Index<GameSession>([\.date])
     var date: Date
     var score: Int
     var gridSize: Int

@@ -21,6 +21,7 @@ final class GameModel {
     @ObservationIgnored
     @AppStorage("TimerDuration") var timerDuration = 30
 
+    
     var gridSize = 3
     var tiles: [Tile] = []
     var gameState: GameState = .start
@@ -37,11 +38,14 @@ final class GameModel {
     // Timer Properties
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
+    private var patternTask: Task<Void, Never>?
     private var isPaused = false
     var paused: Bool { isPaused }
+    
     /// Starts a new round, adjusting grid size based on previous performance.
     func startNewRound() {
         stopTimer()
+        patternTask?.cancel()
         if lastRoundCorrect {
             roundCount += 1
             gridSize = min(gridSize + 1, 10)
@@ -50,9 +54,11 @@ final class GameModel {
         }
         generateTiles()
         gameState = .showingPattern
-        Task {
-            try await Task.sleep(for: .seconds(patternDisplayDuration))
-            hidePattern()
+        
+        patternTask = Task { [weak self] in
+            guard let self else { return }
+            try? await Task.sleep(for: .seconds(patternDisplayDuration))
+            if !Task.isCancelled { self.hidePattern()}
         }
     }
     /// Generates tiles and randomly highlights a subset for the pattern.
@@ -74,8 +80,9 @@ final class GameModel {
         for index in tiles.indices {
             tiles[index].isHighlighted = false
         }
+        remainingTime = timerDuration
         gameState = .userInput
-        startTimer()
+        startOrResumeTimer()
     }
     /// Handles tile selection by the user.
     /// - Parameter index: The index of the selected tile.
@@ -143,6 +150,7 @@ final class GameModel {
         timerTask = nil
     }
     func resetGame() {
+        patternTask?.cancel()
         score = 0
         roundCount = 1
         gridSize = 3
@@ -153,42 +161,23 @@ final class GameModel {
         stopTimer()
         isPaused = false
     }
-    /// Starts the countdown timer for the current round.
-    private func startTimer() {
-        remainingTime = timerDuration
+    
+    private func startOrResumeTimer() {
         timerTask?.cancel()
-        timerTask = Task {
-            do {
-                while remainingTime > 0 {
-                    try await Task.sleep(for: .seconds(1))
-                    remainingTime -= 1
-                }
-                if gameState == .userInput {
-                    gameOver()
-                }
-            } catch {
-                // Handle the cancellation or other errors if necessary
-                // For CancellationError, you can simply ignore it
+        
+        timerTask = Task { [weak self] in
+            guard let self else { return }
+            while self.remainingTime > 0 {
+                try? await Task.sleep(for: .seconds(1))
+                if Task.isCancelled { return }
+                self.remainingTime -= 1
+            }
+            if self.gameState == .userInput {
+                self.gameOver()
             }
         }
     }
-    /// Resumes the timer from the current remaining time (without resetting)
-    private func resumeTimer() {
-        timerTask?.cancel()
-        timerTask = Task {
-            do {
-                while remainingTime > 0 {
-                    try await Task.sleep(for: .seconds(1))
-                    remainingTime -= 1
-                }
-                if gameState == .userInput {
-                    gameOver()
-                }
-            } catch {
-                // Handle cancellation if needed.
-            }
-        }
-    }
+    
     /// Pauses the game during the user input phase.
     func pauseGame() {
         guard gameState == .userInput, !isPaused else { return }
@@ -200,7 +189,7 @@ final class GameModel {
     func resumeGame() {
         guard gameState == .userInput, isPaused else { return }
         isPaused = false
-        resumeTimer()
+        startOrResumeTimer()
     }
     /// Updates the timer duration based on user settings.
     /// - Parameter newDuration: The new timer duration in seconds.
