@@ -77,7 +77,9 @@ struct StartScreenView: View {
                         Image(systemName: "chart.pie")
                     }
                 }
+                #if !os(visionOS)
                 ToolbarSpacer(.fixed)
+                #endif
                 ToolbarItem(placement: .automatic) {
                     Button {
                         isShowingAwards.toggle()
@@ -85,7 +87,9 @@ struct StartScreenView: View {
                         Label("Show awards", systemImage: "rosette")
                     }
                 }
+                #if !os(visionOS)
                 ToolbarSpacer(.fixed)
+                #endif
                 ToolbarItem(placement: .automatic) {
                     NavigationLink {
                         SettingsView()
