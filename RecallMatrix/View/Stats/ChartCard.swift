@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 struct ChartCard<Content: View>: View {
     let title: LocalizedStringKey
@@ -16,6 +21,17 @@ struct ChartCard<Content: View>: View {
         self.title = title
         self.content = content
     }
+
+    private var highContrastBackground: Color {
+        #if canImport(UIKit)
+        return Color(uiColor: .systemBackground).opacity(0.9)
+        #elseif canImport(AppKit)
+        return Color(nsColor: .windowBackgroundColor).opacity(0.9)
+        #else
+        return Color.white.opacity(0.9)
+        #endif
+    }
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)
@@ -28,7 +44,7 @@ struct ChartCard<Content: View>: View {
         .background {
             RoundedRectangle(cornerRadius: 10)
                 .fill(colorSchemeContrast == .increased
-                      ? AnyShapeStyle(Color(.systemBackground).opacity(0.9))
+                      ? AnyShapeStyle(highContrastBackground)
                       : AnyShapeStyle(.ultraThinMaterial))
         }
         .overlay {

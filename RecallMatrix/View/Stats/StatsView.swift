@@ -124,9 +124,7 @@ struct StatsView: View {
         .padding()
         .background {
             RoundedRectangle(cornerRadius: 10)
-                .fill(colorSchemeContrast == .increased
-                      ? AnyShapeStyle(Color(.systemBackground).opacity(0.9))
-                      : AnyShapeStyle(.ultraThinMaterial))
+                .fill(metricCardBackgroundStyle)
         }
         .overlay {
             if colorSchemeContrast == .increased {
@@ -134,6 +132,18 @@ struct StatsView: View {
                     .stroke(.primary.opacity(0.2), lineWidth: 1)
             }
         }
+    }
+
+    private var metricCardBackgroundStyle: AnyShapeStyle {
+        if colorSchemeContrast == .increased {
+#if os(macOS)
+            return AnyShapeStyle(Color(nsColor: .windowBackgroundColor).opacity(0.9))
+#else
+            return AnyShapeStyle(Color(.systemBackground).opacity(0.9))
+#endif
+        }
+
+        return AnyShapeStyle(.ultraThinMaterial)
     }
 }
 
