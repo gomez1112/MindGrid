@@ -48,6 +48,13 @@ extension Bundle {
     }
     
     func decodeIfPresent<T: Decodable>(_ file: String, as: T.Type = T.self) -> T? {
-        load(file, as: T.self)
+        guard let fileURL = url(forResource: file, withExtension: nil) else { return nil }
+        do {
+            let data = try Data(contentsOf: fileURL)
+            let decoder = JSONDecoder()
+            return try decoder.decode(T.self, from: data)
+        } catch {
+            return nil
+        }
     }
 }

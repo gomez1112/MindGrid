@@ -99,6 +99,7 @@ final class GameModel {
     }
     /// Checks the user's selections against the highlighted pattern.
     func checkResult() {
+        guard gameState == .userInput else { return }
         timerTask?.cancel()
         gameState = .result
         let userSelections = Set(tiles.indices.filter { tiles[$0].isSelected })
@@ -164,16 +165,34 @@ final class GameModel {
     
     private func startOrResumeTimer() {
         timerTask?.cancel()
-        
-        timerTask = Task { [weak self] in
+
+        let startingRemainingTime = remainingTime
+        let clock = ContinuousClock()
+        let startTime = clock.now
+
+        timerTask = Task.detached { [weak self] in
             guard let self else { return }
-            while self.remainingTime > 0 {
-                try? await Task.sleep(for: .seconds(1))
+            while !Task.isCancelled {
+                try? await clock.sleep(for: .milliseconds(200))
                 if Task.isCancelled { return }
-                self.remainingTime -= 1
-            }
-            if self.gameState == .userInput {
-                self.gameOver()
+
+                let elapsedSeconds = Int(startTime.duration(to: clock.now).components.seconds)
+                let updatedRemaining = max(startingRemainingTime - elapsedSeconds, 0)
+                let shouldEnd = await MainActor.run {
+                    if updatedRemaining != self.remainingTime {
+                        self.remainingTime = updatedRemaining
+                    }
+                    return self.gameState == .userInput && self.remainingTime == 0
+                }
+
+                if shouldEnd {
+                    await MainActor.run { self.gameOver() }
+                    return
+                }
+
+                if updatedRemaining == 0 {
+                    return
+                }
             }
         }
     }

@@ -58,6 +58,7 @@ struct StartScreenView: View {
                             Text("Settings")
                                 .buttonBackground()
                         }
+                        .accessibilityIdentifier("StartScreenSettingsButton")
                     }
                     .buttonStyle(.plain)
                 }

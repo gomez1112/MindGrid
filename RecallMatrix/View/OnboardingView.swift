@@ -130,9 +130,6 @@ struct OnboardingView: View {
             Text("**Recall and Select**")
             Text("After the pattern disappears, select the tiles that were highlighted.")
             mockGridView
-                .onAppear {
-                    startMockHighlighting()
-                }
         }
     }
     
@@ -149,9 +146,6 @@ struct OnboardingView: View {
                 .font(.system(size: 100))
                 .foregroundStyle(Constant.Style.blueToPurple)
             dynamicDifficultySection
-        }
-        .onAppear {
-            animateGridSize()
         }
     }
     

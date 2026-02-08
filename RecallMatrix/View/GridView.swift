@@ -28,6 +28,9 @@ struct GridView: View {
             }
             .padding()
             .onAppear { game.updateTimerDuration(timerDuration) }
+            .onChange(of: timerDuration) { _, newValue in
+                game.updateTimerDuration(newValue)
+            }
             .onDisappear {
                 if game.gameState == .userInput {
                     game.gameOver()
@@ -194,7 +197,7 @@ struct GridView: View {
             // Record EVERY session, not just game over
             let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
             let totalHighlighted = game.highlightedTileIndices.count
-            let elapsedTime = Double(timerDuration - game.remainingTime)
+            let elapsedTime = Double(game.timerDuration - game.remainingTime)
             recordGameSession(
                 score: game.score,
                 gridSize: game.gridSize,
@@ -268,4 +271,3 @@ struct GridView: View {
             .environment(GameModel())
     }
 }
-

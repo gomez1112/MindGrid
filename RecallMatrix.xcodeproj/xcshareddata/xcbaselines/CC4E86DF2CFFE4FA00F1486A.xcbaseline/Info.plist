@@ -66,6 +66,30 @@
 				<string>com.apple.platform.iphonesimulator</string>
 			</dict>
 		</dict>
+		<key>D9F1DB41-5F55-48E3-ACBA-A39EFDC85D11</key>
+		<dict>
+			<key>localComputer</key>
+			<dict>
+				<key>busSpeedInMHz</key>
+				<integer>0</integer>
+				<key>cpuCount</key>
+				<integer>1</integer>
+				<key>cpuKind</key>
+				<string>Apple M3 Max</string>
+				<key>cpuSpeedInMHz</key>
+				<integer>0</integer>
+				<key>logicalCPUCoresPerPackage</key>
+				<integer>14</integer>
+				<key>modelCode</key>
+				<string>Mac15,10</string>
+				<key>physicalCPUCoresPerPackage</key>
+				<integer>14</integer>
+				<key>platformIdentifier</key>
+				<string>com.apple.platform.macosx</string>
+			</dict>
+			<key>targetArchitecture</key>
+			<string>arm64</string>
+		</dict>
 	</dict>
 </dict>
 </plist>
