@@ -41,7 +41,7 @@ final class RecallMatrixUITests: XCTestCase {
     func testOpenSettings() throws {
         // 1) Identify the Settings button or link
         //    If using a NavigationLink with label "Settings", you can look it up by Accessibility Label "Settings"
-        let settingsButton = app.buttons["StartScreenSettingsButton"]
+        let settingsButton = app.navigationBars.buttons["Settings"]
         
         XCTAssertTrue(settingsButton.exists, "A 'Settings' button should be available on the start screen.")
         settingsButton.tap()

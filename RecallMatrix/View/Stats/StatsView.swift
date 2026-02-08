@@ -11,8 +11,9 @@ import SwiftUI
 
 struct StatsView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     @State private var metric = MetricModel()
-    @Query(sort: \GameSession.date) private var sessions: [GameSession]
+    @Query(sort: [SortDescriptor(\GameSession.date)]) private var sessions: [GameSession]
     var body: some View {
         NavigationStack {
             ZStack {
@@ -121,8 +122,18 @@ struct StatsView: View {
                 .foregroundStyle(.secondary)
         }
         .padding()
-        .background(.ultraThinMaterial)
-        .clipShape(.rect(cornerRadius: 10))
+        .background {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(colorSchemeContrast == .increased
+                      ? AnyShapeStyle(Color(.systemBackground).opacity(0.9))
+                      : AnyShapeStyle(.ultraThinMaterial))
+        }
+        .overlay {
+            if colorSchemeContrast == .increased {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.primary.opacity(0.2), lineWidth: 1)
+            }
+        }
     }
 }
 

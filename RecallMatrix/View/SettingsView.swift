@@ -111,6 +111,8 @@ struct SettingsView: View {
         timerDuration = 30
         soundEnabled = true
         hapticFeedbackEnabled = true
+        highestScore = 0
+        hasSeenOnboarding = false
     }
 }
 
@@ -118,4 +120,3 @@ struct SettingsView: View {
     SettingsView()
         .environment(GameModel())
 }
-

@@ -10,6 +10,7 @@ import SwiftUI
 struct ChartCard<Content: View>: View {
     let title: LocalizedStringKey
     @ViewBuilder let content: () -> Content
+    @Environment(\.colorSchemeContrast) private var colorSchemeContrast
     
     init(title: LocalizedStringKey, content: @escaping () -> Content) {
         self.title = title
@@ -24,8 +25,18 @@ struct ChartCard<Content: View>: View {
                 .padding(.top, 5)
         }
         .padding()
-        .background(.ultraThinMaterial)
-        .clipShape(.rect(cornerRadius: 10))
+        .background {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(colorSchemeContrast == .increased
+                      ? AnyShapeStyle(Color(.systemBackground).opacity(0.9))
+                      : AnyShapeStyle(.ultraThinMaterial))
+        }
+        .overlay {
+            if colorSchemeContrast == .increased {
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(.primary.opacity(0.2), lineWidth: 1)
+            }
+        }
         .frame(minHeight: 300)
     }
 }

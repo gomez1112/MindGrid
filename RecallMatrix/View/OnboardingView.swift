@@ -18,6 +18,7 @@ struct OnboardingView: View {
     
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.verticalSizeClass) private var verticalSizeClass
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     
     @State private var onboardingActive = true
     
@@ -110,9 +111,11 @@ struct OnboardingView: View {
         }
         .frame(minWidth: 300)
         .onAppear {
-            onboardingActive = true
-            startMockHighlighting()
-            animateGridSize()
+            onboardingActive = !reduceMotion
+            if !reduceMotion {
+                startMockHighlighting()
+                animateGridSize()
+            }
         }
         .onDisappear {
             onboardingActive = false
@@ -142,7 +145,7 @@ struct OnboardingView: View {
                 .font(.headline)
                 .foregroundStyle(.secondary)
             Image(systemName: "hand.tap")
-                .symbolEffect(.bounce)
+                .symbolEffect(.bounce, isActive: !reduceMotion)
                 .font(.system(size: 100))
                 .foregroundStyle(Constant.Style.blueToPurple)
             dynamicDifficultySection
@@ -159,7 +162,7 @@ struct OnboardingView: View {
                 .foregroundStyle(.secondary)
             Spacer()
             Image(systemName: "clock.fill")
-                .symbolEffect(.rotate, options: .nonRepeating)
+                .symbolEffect(.rotate, options: .nonRepeating, isActive: !reduceMotion)
                 .font(.system(size: 100))
                 .foregroundStyle(Constant.Style.blueToPurple)
                 .accessibilityLabel("Countdown icon")
@@ -190,12 +193,12 @@ struct OnboardingView: View {
                         }
                     }
                 }
-                .animation(.easeInOut(duration: 1.5), value: gridSize)
+                .animation(reduceMotion ? .none : .easeInOut(duration: 1.5), value: gridSize)
             }
         }
     }
     private func animateGridSize() {
-        guard onboardingActive else { return }
+        guard onboardingActive, !reduceMotion else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             guard onboardingActive else { return}
             if isIncreasing {
@@ -212,7 +215,7 @@ struct OnboardingView: View {
             Text(isGreenPhase ? "You selected the correct tiles." : "Remember the yellow tiles")
                 .font(.title)
                 .foregroundStyle(isGreenPhase ? .green : .yellow)
-                .animation(.easeInOut, value: isGreenPhase)
+                .animation(reduceMotion ? .none : .easeInOut, value: isGreenPhase)
             
             Grid(horizontalSpacing: 10, verticalSpacing: 10) {
                 ForEach(0..<3, id: \.self) { row in
@@ -234,6 +237,7 @@ struct OnboardingView: View {
     }
     
     private func startMockHighlighting() {
+        guard !reduceMotion else { return }
         // Randomly highlight tiles for the yellow phase
         mockHighlightedTiles = Array(repeating: false, count: 9)
         let numberOfTilesToHighlight = Int.random(in: 2...4)
@@ -247,7 +251,7 @@ struct OnboardingView: View {
     }
     
     private func updatePhase() {
-        guard onboardingActive else { return }
+        guard onboardingActive, !reduceMotion else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             guard onboardingActive else { return }
             isGreenPhase.toggle() // Switch between yellow and green

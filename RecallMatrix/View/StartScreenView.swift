@@ -53,12 +53,6 @@ struct StartScreenView: View {
                             Text("How to Play")
                                 .buttonBackground()
                         }
-                        
-                        NavigationLink(destination: SettingsView()) {
-                            Text("Settings")
-                                .buttonBackground()
-                        }
-                        .accessibilityIdentifier("StartScreenSettingsButton")
                     }
                     .buttonStyle(.plain)
                 }

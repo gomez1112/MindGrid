@@ -29,11 +29,15 @@ struct GridView: View {
             .padding()
             .onAppear { game.updateTimerDuration(timerDuration) }
             .onChange(of: timerDuration) { _, newValue in
-                game.updateTimerDuration(newValue)
+                if game.gameState == .userInput {
+                    game.timerDuration = newValue
+                } else {
+                    game.updateTimerDuration(newValue)
+                }
             }
             .onDisappear {
                 if game.gameState == .userInput {
-                    game.gameOver()
+                    game.pauseGame()
                 }
             }
             .navigationBarBackButtonHidden(game.gameState != .gameOver)
