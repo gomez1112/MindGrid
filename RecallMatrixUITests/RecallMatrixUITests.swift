@@ -12,13 +12,10 @@ final class RecallMatrixUITests: XCTestCase {
     var app: XCUIApplication!
     
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
         app = XCUIApplication()
+        // Ensure onboarding is already dismissed so it doesn't block the UI
+        app.launchArguments += ["-hasSeenOnboarding", "YES"]
         app.launch()
     }
 
@@ -28,8 +25,11 @@ final class RecallMatrixUITests: XCTestCase {
 
     @MainActor
     func testStartGameButton() throws {
-        let enterGameButton = app.buttons["Enter Game"]
-        XCTAssertTrue(enterGameButton.exists, "The 'Enter Game Button' should be visible on the start screen.")
+        let enterGameButton = app.buttons["EnterGameButton"]
+        XCTAssertTrue(
+            enterGameButton.waitForExistence(timeout: 5),
+            "The 'Enter Game' button should be visible on the start screen."
+        )
         enterGameButton.tap()
         
         let recallMatrixTitle = app.staticTexts["Recall Matrix"]
@@ -39,31 +39,32 @@ final class RecallMatrixUITests: XCTestCase {
     /// Test 2: Verify that the settings button is available (on the Start Screen) and opens SettingsView.
     @MainActor
     func testOpenSettings() throws {
-        // 1) Identify the Settings button or link
-        //    If using a NavigationLink with label "Settings", you can look it up by Accessibility Label "Settings"
-        let settingsButton = app.navigationBars.buttons["Settings"]
+        let settingsButton = app.buttons["SettingsButton"]
         
-        XCTAssertTrue(settingsButton.exists, "A 'Settings' button should be available on the start screen.")
+        XCTAssertTrue(
+            settingsButton.waitForExistence(timeout: 5),
+            "A 'Settings' button should be available on the start screen."
+        )
         settingsButton.tap()
         
-        // 2) Verify that the Settings screen is now visible, perhaps by checking a known label
-        //    For example, "Time per Round" label within the Form
         let timeStepperLabel = app.staticTexts["Time per Round"]
         XCTAssertTrue(
             timeStepperLabel.waitForExistence(timeout: 5),
             "Expected to see 'Time per Round' label on the Settings screen."
         )
     }
-    /// Test 3: Check a simple “Tile” interaction (assuming you have a tile with an accessibility identifier).
+    /// Test 3: Enter the game and verify the Start Game button exists.
+    @MainActor
     func testStartButton() throws {
-        // 1) Start the game to move to the GridView.
-        let enterGameButton = app.buttons["Enter Game"]
-        XCTAssertTrue(enterGameButton.exists)
+        let enterGameButton = app.buttons["EnterGameButton"]
+        XCTAssertTrue(enterGameButton.waitForExistence(timeout: 5))
         enterGameButton.tap()
         
-        // 3) Tap on a tile. Suppose each TileView has "TileButton_N" as an identifier, or "Tile at position..."
-        let startGameButton  = app.buttons["Start Game"]
-        XCTAssertTrue(startGameButton.exists)
+        let startGameButton = app.buttons["Start Game"]
+        XCTAssertTrue(
+            startGameButton.waitForExistence(timeout: 5),
+            "The 'Start Game' button should be visible after entering the game."
+        )
     }
 
     @MainActor

@@ -19,17 +19,52 @@ struct TileView: View {
             .frame(minWidth: 44, minHeight: 44)
             .clipShape(.rect(cornerRadius: cornerRadius))
             .shadow(color: .black.opacity(0.2), radius: shadowRadius, x: 0, y: 4)
+            // Correct tile glow
+            .shadow(
+                color: tile.isCorrectTile ? .green.opacity(0.6) : .clear,
+                radius: tile.isCorrectTile ? 8 : 0
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.black, lineWidth: 1)
+                    .stroke(tileBorderColor, lineWidth: tileBorderWidth)
             }
             .overlay { stateIcon }
-            .scaleEffect(reduceMotion ? 1 : (tile.isSelected ? 1.05 : 1), anchor: .center)
+            .scaleEffect(reduceMotion ? 1 : tileScale, anchor: .center)
+            // Shake animation for incorrect tiles
+            .phaseAnimator(
+                tile.isIncorrectTile ? [0.0, -6.0, 6.0, -4.0, 4.0, 0.0] : [0.0],
+                trigger: tile.isIncorrectTile
+            ) { content, offset in
+                content.offset(x: offset)
+            } animation: { _ in
+                reduceMotion ? .none : .easeInOut(duration: 0.08)
+            }
             .accessibilityIdentifier("TileButton_\(tile.id)")
             .accessibilityLabel(tileAccessibilityLabel)
             .accessibilityHint(tile.isSelected ? "Double tap to deselect this tile." : "Double tap to select this tile.")
             .accessibilityAddTraits(.isButton)
-            .animation(reduceMotion ? .none : .spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0), value: tile.isSelected)
+            .animation(reduceMotion ? .none : .spring(response: 0.3, dampingFraction: 0.6), value: tile.isSelected)
+            .animation(reduceMotion ? .none : .easeInOut(duration: 0.3), value: tile.isCorrectTile)
+            .animation(reduceMotion ? .none : .easeInOut(duration: 0.4), value: tile.isHighlighted)
+    }
+    
+    private var tileScale: CGFloat {
+        if tile.isHighlighted { return 1.05 }
+        if tile.isSelected { return 1.08 }
+        if tile.isCorrectTile { return 1.03 }
+        return 1
+    }
+    
+    private var tileBorderColor: Color {
+        if tile.isCorrectTile { return .green }
+        if tile.isIncorrectTile { return .red }
+        if tile.isHighlighted { return .yellow }
+        return .black
+    }
+    
+    private var tileBorderWidth: CGFloat {
+        if tile.isCorrectTile || tile.isIncorrectTile || tile.isHighlighted { return 2 }
+        return 1
     }
     var tileColor: LinearGradient {
         if tile.isCorrectTile {

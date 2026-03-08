@@ -36,7 +36,7 @@ struct GameFlowTests {
         
         #expect(model.roundCount == previousRoundCount + 1)
         #expect(model.gridSize == 4)
-        #expect(model.gameState == .showingPattern)
+        #expect(model.gameState == .countdown)
         #expect(!model.tiles.isEmpty)
     }
     
@@ -48,7 +48,7 @@ struct GameFlowTests {
         
         #expect(model.roundCount == 1)
         #expect(model.gridSize == 3)
-        #expect(model.gameState == .showingPattern)
+        #expect(model.gameState == .countdown)
         #expect(!model.tiles.isEmpty)
     }
     
@@ -90,6 +90,32 @@ struct GameFlowTests {
         model.startNewRound()
         
         #expect(model.gridSize == 3)
+    }
+    
+    @Test
+    func testInitialStreakState() {
+        #expect(model.currentStreak == 0)
+        #expect(model.bestStreak == 0)
+        #expect(model.totalCorrectRounds == 0)
+    }
+    
+    @Test
+    func testResetGameClearsStreak() {
+        model.currentStreak = 5
+        model.bestStreak = 7
+        model.totalCorrectRounds = 10
+        model.resetGame()
+        
+        #expect(model.currentStreak == 0)
+        #expect(model.bestStreak == 0)
+        #expect(model.totalCorrectRounds == 0)
+    }
+    
+    @Test
+    func testCountdownState() {
+        model.startNewRound()
+        #expect(model.gameState == .countdown)
+        #expect(model.countdownValue == 3)
     }
 }
 

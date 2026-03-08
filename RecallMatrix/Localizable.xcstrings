@@ -81,6 +81,39 @@
         }
       }
     },
+    "%lld" : {
+
+    },
+    "%lld out of %lld tiles correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld out of %2$lld tiles correct"
+          }
+        }
+      }
+    },
+    "%lld/%lld tiles correct" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld tiles correct"
+          }
+        }
+      }
+    },
+    "%lldx%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lldx%2$lld"
+          }
+        }
+      }
+    },
     "^[%lld second](inflect: true)" : {
       "localizations" : {
         "en" : {
@@ -96,6 +129,9 @@
           }
         }
       }
+    },
+    "+%lld points!" : {
+
     },
     "About" : {
       "localizations" : {
@@ -519,6 +555,12 @@
         }
       }
     },
+    "End Game" : {
+
+    },
+    "Ends the current game and shows your results." : {
+
+    },
     "Enter Game" : {
       "localizations" : {
         "en" : {
@@ -599,6 +641,9 @@
         }
       }
     },
+    "Get ready: %lld" : {
+
+    },
     "Get Started" : {
       "localizations" : {
         "en" : {
@@ -675,6 +720,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tamaño de la cuadrícula"
+          }
+        }
+      }
+    },
+    "Grid size %lld by %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Grid size %1$lld by %2$lld"
           }
         }
       }
@@ -846,6 +901,9 @@
         }
       }
     },
+    "Plus %lld points bonus" : {
+
+    },
     "Proceed to the next round of the game." : {
       "localizations" : {
         "en" : {
@@ -994,6 +1052,9 @@
 
     },
     "Resume Game" : {
+
+    },
+    "Round %lld" : {
 
     },
     "Score: %lld" : {
@@ -1156,6 +1217,12 @@
         }
       }
     },
+    "Streak of %lld correct rounds" : {
+
+    },
+    "Streak: %lld" : {
+
+    },
     "Submit your answers before time runs out!" : {
       "localizations" : {
         "en" : {
@@ -1269,6 +1336,7 @@
       }
     },
     "Time Remaining: %lld sec" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1348,7 +1416,11 @@
         }
       }
     },
+    "Try Again! Your selection was incorrect." : {
+
+    },
     "Try Again!. Your selection was incorrect." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1412,7 +1484,11 @@
         }
       }
     },
+    "You're on a streak of %lld" : {
+
+    },
     "Your final score is displayed." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1429,6 +1505,7 @@
       }
     },
     "Your highest score is %lld." : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1445,6 +1522,7 @@
       }
     },
     "Your Highest Score: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

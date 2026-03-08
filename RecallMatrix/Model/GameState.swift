@@ -9,6 +9,7 @@ import Foundation
 
 enum GameState {
     case start
+    case countdown
     case showingPattern
     case userInput
     case result

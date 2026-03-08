@@ -40,23 +40,56 @@ struct GridView: View {
                     game.pauseGame()
                 }
             }
-            .navigationBarBackButtonHidden(game.gameState != .gameOver)
+            .navigationBarBackButtonHidden(game.gameState != .gameOver && game.gameState != .start)
+            .toolbar {
+                if game.gameState != .start && game.gameState != .gameOver {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button {
+                            if game.score > highestScore {
+                                highestScore = game.score
+                            }
+                            withAnimation {
+                                game.gameOver()
+                            }
+                        } label: {
+                            Text("End Game")
+                                .foregroundStyle(.red)
+                        }
+                        .accessibilityLabel("End Game")
+                        .accessibilityHint("Ends the current game and shows your results.")
+                    }
+                }
+            }
             .accessibilityElement(children: .contain)
         
     }
     var gameOverView: some View {
-        VStack {
+        VStack(spacing: 16) {
             Text("Game Over")
-                .font(.title.bold())
+                .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundStyle(.red)
-                .padding()
                 .accessibilityLabel("Game Over")
-                .accessibilityHint("Your final score is displayed.")
-            Text("Your Highest Score: \(highestScore)")
-                .font(.system(size: 24, weight: .medium))
-                .foregroundStyle(.primary)
-                .accessibilityLabel("Your highest score is \(highestScore).")
+            
+            // Final stats card
+            VStack(spacing: 12) {
+                statRow(label: "Final Score", value: "\(game.score)")
+                statRow(label: "Highest Score", value: "\(highestScore)")
+                statRow(label: "Rounds Played", value: "\(game.roundCount)")
+                statRow(label: "Best Streak", value: "\(game.bestStreak)")
+                statRow(label: "Correct Rounds", value: "\(game.totalCorrectRounds)")
+            }
+            .padding()
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+            
+            Text(encouragingMessage)
+                .font(.headline)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .accessibilityLabel(encouragingMessage)
+            
             Spacer()
+            
             HStack {
                 Button {
                     withAnimation {
@@ -65,10 +98,8 @@ struct GridView: View {
                 } label: {
                     Text("Restart")
                         .buttonBackground()
-                    
                 }
                 .buttonStyle(.plain)
-                .padding(.top, 20)
                 .keyboardShortcut("r", modifiers: [.command])
                 .accessibilityLabel("Restart game")
                 .accessibilityHint("Starts a new game from the beginning.")
@@ -77,11 +108,33 @@ struct GridView: View {
                         .buttonBackground()
                 }
                 .buttonStyle(.plain)
-                .padding(.top, 20)
             }
         }
         .padding()
         .accessibilityElement(children: .contain)
+    }
+    
+    private func statRow(label: String, value: String) -> some View {
+        HStack {
+            Text(label)
+                .foregroundStyle(.secondary)
+            Spacer()
+            Text(value)
+                .font(.headline.bold())
+        }
+        .accessibilityElement(children: .combine)
+    }
+    
+    private var encouragingMessage: String {
+        if game.bestStreak >= 5 {
+            return "Amazing streak! You're a memory master!"
+        } else if game.totalCorrectRounds >= 5 {
+            return "Great job! Your memory is impressive!"
+        } else if game.score > 0 {
+            return "Good effort! Keep practicing to improve!"
+        } else {
+            return "Don't give up! Every game makes you better!"
+        }
     }
     var gameUI: some View {
         VStack {
@@ -100,14 +153,39 @@ struct GridView: View {
                     }
                     .accessibilityLabel("Highest Score: \(highestScore)")
             }
-            .padding()
-            Text("Time Remaining: \(game.remainingTime) sec")
-                .font(.title3.weight(.medium))
-                .platformNot(for: .visionOS) {
-                    $0.foregroundStyle(Constant.Style.blueToPurple)
+            .padding(.horizontal)
+            // Round info, grid size, and streak
+            HStack {
+                Text("Round \(game.roundCount)")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .accessibilityLabel("Round \(game.roundCount)")
+                Spacer()
+                Text("\(game.gridSize)x\(game.gridSize)")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                    .accessibilityLabel("Grid size \(game.gridSize) by \(game.gridSize)")
+                Spacer()
+                if game.currentStreak >= 2 {
+                    HStack(spacing: 4) {
+                        Image(systemName: "flame.fill")
+                            .foregroundStyle(.orange)
+                            .symbolEffect(.bounce, value: game.currentStreak)
+                        Text("\(game.currentStreak)")
+                            .font(.headline.bold())
+                            .foregroundStyle(.orange)
+                    }
+                    .transition(.scale.combined(with: .opacity))
+                    .accessibilityLabel("Streak of \(game.currentStreak) correct rounds")
                 }
-                .padding(.top, 5)
-                .accessibilityLabel("Time remaining: \(game.remainingTime) seconds")
+            }
+            .padding(.horizontal)
+            .animation(.spring(response: 0.3), value: game.currentStreak)
+            // Circular timer
+            if game.gameState == .userInput {
+                CircularTimerView(remainingTime: game.remainingTime, totalTime: game.timerDuration)
+                    .padding(.top, 5)
+            }
             Grid(horizontalSpacing: isSmallScreen ? 12 : 30, verticalSpacing: isSmallScreen ? 12 : 30) {
                 ForEach(0..<game.gridSize, id: \.self) { row in
                     GridRow {
@@ -135,6 +213,9 @@ struct GridView: View {
             switch game.gameState {
                 case .start:
                     startButton
+                        .padding()
+                case .countdown:
+                    CountdownOverlayView(value: game.countdownValue)
                         .padding()
                 case .userInput:
                     checkResultButton
@@ -198,7 +279,6 @@ struct GridView: View {
             if game.score > highestScore {
                 highestScore = game.score
             }
-            // Record EVERY session, not just game over
             let correctTiles = game.tiles.filter { $0.isCorrectTile }.count
             let totalHighlighted = game.highlightedTileIndices.count
             let elapsedTime = Double(game.timerDuration - game.remainingTime)
@@ -209,12 +289,6 @@ struct GridView: View {
                 totalTiles: totalHighlighted,
                 elapsedTime: elapsedTime
             )
-            
-            // If game is over, call gameOver
-            if game.score <= 0 {
-                game.gameOver()
-            }
-            
         } label: {
             Text("Check Result")
                 .buttonBackground()
@@ -225,14 +299,46 @@ struct GridView: View {
         .accessibilityHint("Check if your selected tiles match the pattern.")
     }
     var resultView: some View {
-        VStack {
+        VStack(spacing: 12) {
             Text(game.lastRoundCorrect ? "Great Job!" : "Try Again!")
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(game.lastRoundCorrect ? .green : .red)
-                .padding()
-                .transition(.scale)
-                .animation(.easeInOut, value: game.lastRoundCorrect)
-                .accessibilityLabel(game.lastRoundCorrect ? "Great Job! You got it correct." : "Try Again!. Your selection was incorrect.")
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .foregroundColor(game.lastRoundCorrect ? .green : .orange)
+                .scaleEffect(game.lastRoundCorrect ? 1.1 : 1.0)
+                .animation(.spring(response: 0.4, dampingFraction: 0.5), value: game.lastRoundCorrect)
+                .accessibilityLabel(game.lastRoundCorrect ? "Great Job! You got it correct." : "Try Again! Your selection was incorrect.")
+            
+            // Accuracy display
+            let correctCount = game.tiles.filter { $0.isCorrectTile }.count
+            let totalHighlighted = game.highlightedTileIndices.count
+            Text("\(correctCount)/\(totalHighlighted) tiles correct")
+                .font(.title3)
+                .foregroundStyle(.secondary)
+                .accessibilityLabel("\(correctCount) out of \(totalHighlighted) tiles correct")
+            
+            // Streak display on correct
+            if game.lastRoundCorrect && game.currentStreak >= 2 {
+                HStack(spacing: 4) {
+                    Image(systemName: "flame.fill")
+                        .foregroundStyle(.orange)
+                    Text("Streak: \(game.currentStreak)")
+                        .font(.headline.bold())
+                        .foregroundStyle(.orange)
+                }
+                .transition(.scale.combined(with: .opacity))
+                .accessibilityLabel("You're on a streak of \(game.currentStreak)")
+            }
+            
+            // Bonus points indicator
+            if game.lastRoundCorrect {
+                let bonus = game.currentStreak >= 5 ? 3 : (game.currentStreak >= 3 ? 2 : 1)
+                if bonus > 1 {
+                    Text("+\(bonus) points!")
+                        .font(.headline)
+                        .foregroundStyle(.green)
+                        .transition(.scale.combined(with: .opacity))
+                        .accessibilityLabel("Plus \(bonus) points bonus")
+                }
+            }
             
             Button {
                 withAnimation {

@@ -35,6 +35,14 @@ final class GameModel {
     var roundCount = 1
     var lastRoundCorrect = false
     
+    // Streak & combo properties
+    var currentStreak = 0
+    var bestStreak = 0
+    var totalCorrectRounds = 0
+    
+    // Countdown properties
+    var countdownValue = 3
+    
     // Timer Properties
     var remainingTime: Int = 30
     var timerTask: Task<Void, Never>? = nil
@@ -53,12 +61,24 @@ final class GameModel {
             gridSize = max(gridSize - 1, 3)
         }
         generateTiles()
-        gameState = .showingPattern
+        countdownValue = 3
+        gameState = .countdown
         
         patternTask = Task { [weak self] in
             guard let self else { return }
+            // Countdown: 3, 2, 1
+            for i in stride(from: 3, through: 1, by: -1) {
+                if Task.isCancelled { return }
+                self.countdownValue = i
+                if soundEnabled {
+                    AudioManager.shared.playSound("titleTap.wav")
+                }
+                try? await Task.sleep(for: .seconds(Constant.Animation.countdownDuration))
+            }
+            if Task.isCancelled { return }
+            self.gameState = .showingPattern
             try? await Task.sleep(for: .seconds(patternDisplayDuration))
-            if !Task.isCancelled { self.hidePattern()}
+            if !Task.isCancelled { self.hidePattern() }
         }
     }
     /// Generates tiles and randomly highlights a subset for the pattern.
@@ -77,6 +97,7 @@ final class GameModel {
     }
     /// Hides the pattern and transitions to user input state.
     func hidePattern() {
+        patternTask?.cancel()
         for index in tiles.indices {
             tiles[index].isHighlighted = false
         }
@@ -116,7 +137,17 @@ final class GameModel {
             }
         }
         if userSelections == highlightedTileIndices {
-            score += 1
+            currentStreak += 1
+            bestStreak = max(bestStreak, currentStreak)
+            totalCorrectRounds += 1
+            // Streak-based scoring: 5+ = +3, 3-4 = +2, otherwise +1
+            if currentStreak >= 5 {
+                score += 3
+            } else if currentStreak >= 3 {
+                score += 2
+            } else {
+                score += 1
+            }
             lastRoundCorrect = true
             if soundEnabled {
                 AudioManager.shared.playSound("correct.wav")
@@ -125,7 +156,8 @@ final class GameModel {
                 HapticManager.shared.generateFeedback(for: .success)
             }
         } else {
-            score = max(score - 1, 0)
+            // Softer penalty: reset streak, score stays unchanged
+            currentStreak = 0
             lastRoundCorrect = false
             if soundEnabled {
                 AudioManager.shared.playSound("incorrect.wav")
@@ -137,6 +169,7 @@ final class GameModel {
     }
     /// Handles game over state when time runs out or other termination conditions are met.
     func gameOver() {
+        patternTask?.cancel()
         timerTask?.cancel()
         gameState = .gameOver
         if soundEnabled {
@@ -161,6 +194,10 @@ final class GameModel {
         timerTask?.cancel()
         stopTimer()
         isPaused = false
+        currentStreak = 0
+        bestStreak = 0
+        totalCorrectRounds = 0
+        countdownValue = 3
     }
     
     private func startOrResumeTimer() {

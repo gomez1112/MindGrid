@@ -42,13 +42,12 @@ struct TileSelectionTests {
     @Test
     func testSelectTile() async throws {
         model.startNewRound()
-        try await Task.sleep(for: .seconds(2.8))
+        model.hidePattern()
         
-        if model.gameState == .userInput {
-            let indexToSelect = 0
-            model.selectTile(at: indexToSelect)
-            #expect(model.tiles[indexToSelect].isSelected == true)
-        }
+        #expect(model.gameState == .userInput)
+        let indexToSelect = 0
+        model.selectTile(at: indexToSelect)
+        #expect(model.tiles[indexToSelect].isSelected == true)
     }
     
     @Test
@@ -87,7 +86,7 @@ struct TileSelectionTests {
     @Test
     func testCheckResultIncorrectSelection() async throws {
         model.startNewRound()
-        try await Task.sleep(for: .seconds(2.8))
+        model.hidePattern()
         
         // Select a non-highlighted tile
         for (index, _) in model.tiles.enumerated() {
@@ -101,8 +100,9 @@ struct TileSelectionTests {
         model.checkResult()
         
         #expect(model.gameState == .result)
-        #expect(model.score == max(previousScore - 1, 0))
+        #expect(model.score == previousScore) // Score unchanged on wrong answer
         #expect(model.lastRoundCorrect == false)
+        #expect(model.currentStreak == 0)
         
         // Verify tile states
         for (index, tile) in model.tiles.enumerated() {
@@ -110,6 +110,51 @@ struct TileSelectionTests {
                 #expect(tile.isIncorrectTile == true)
             }
         }
+    }
+    
+    @Test
+    func testStreakIncrementsOnCorrect() {
+        model.startNewRound()
+        model.hidePattern()
+        
+        // Select all highlighted tiles
+        for index in model.highlightedTileIndices {
+            model.selectTile(at: index)
+        }
+        model.checkResult()
+        
+        #expect(model.currentStreak == 1)
+        #expect(model.bestStreak == 1)
+        #expect(model.totalCorrectRounds == 1)
+        #expect(model.score == 1)
+    }
+    
+    @Test
+    func testStreakResetsOnIncorrect() {
+        model.startNewRound()
+        model.hidePattern()
+        
+        // First, get a correct answer to build streak
+        for index in model.highlightedTileIndices {
+            model.selectTile(at: index)
+        }
+        model.checkResult()
+        #expect(model.currentStreak == 1)
+        
+        // Now get an incorrect answer
+        model.startNewRound()
+        model.hidePattern()
+        for (index, _) in model.tiles.enumerated() {
+            if !model.highlightedTileIndices.contains(index) {
+                model.selectTile(at: index)
+                break
+            }
+        }
+        model.checkResult()
+        
+        #expect(model.currentStreak == 0)
+        #expect(model.bestStreak == 1) // Best streak preserved
+        #expect(model.score == 1) // Score unchanged on wrong answer
     }
 }
 

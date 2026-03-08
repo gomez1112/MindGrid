@@ -49,10 +49,12 @@ struct StartScreenView: View {
                             Text("Enter Game")
                                 .buttonBackground()
                         }
+                        .accessibilityIdentifier("EnterGameButton")
                         NavigationLink(destination: OnboardingView()) {
                             Text("How to Play")
                                 .buttonBackground()
                         }
+                        .accessibilityIdentifier("HowToPlayButton")
                     }
                     .buttonStyle(.plain)
                 }
@@ -91,6 +93,7 @@ struct StartScreenView: View {
                     } label: {
                         Label("Settings", systemImage: "gear")
                     }
+                    .accessibilityIdentifier("SettingsButton")
                 }
             }
             .sheet(isPresented: $isShowingStats) {
