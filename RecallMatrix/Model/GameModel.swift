@@ -189,11 +189,13 @@ final class GameModel {
         roundCount = 1
         gridSize = 3
         tiles.removeAll()
+        highlightedTileIndices.removeAll()
         gameState = .start
         remainingTime = timerDuration
         timerTask?.cancel()
         stopTimer()
         isPaused = false
+        lastRoundCorrect = false
         currentStreak = 0
         bestStreak = 0
         totalCorrectRounds = 0

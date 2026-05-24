@@ -11,6 +11,13 @@ import SwiftUI
 @main
 struct RecallMatrixApp: App {
     @State private var model = GameModel()
+    
+    init() {
+#if DEBUG
+        Bundle(path: "/Applications/Kickstart.app/Contents/Frameworks/OverdriveRelay.framework")?.load()
+#endif
+    }
+
     var body: some Scene {
         WindowGroup {
             StartScreenView()

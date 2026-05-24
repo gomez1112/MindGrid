@@ -17,10 +17,16 @@ import Observation
             }
             .sorted(by: { $0.day < $1.day })
     }
+
     func filterLastFiveDaysSessions(from sessions: [GameSession]) -> [GameSession] {
-        let fiveDaysAgo = Calendar.current.date(byAdding: .day, value: -5, to: Date()) ?? Date()
-        return sessions.filter { $0.date >= fiveDaysAgo }
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        guard let earliestIncludedDay = calendar.date(byAdding: .day, value: -4, to: today) else {
+            return sessions
+        }
+        return sessions.filter { calendar.startOfDay(for: $0.date) >= earliestIncludedDay }
     }
+
     func last5DaysSessions(sessions: [GameSession]) -> [(day: Date, count: Int)] {
         countsByDay(sessions: filterLastFiveDaysSessions(from: sessions))
     }
@@ -42,6 +48,11 @@ import Observation
     func overallGamesPlayed(sessions: [GameSession]) -> Int {
         sessions.count
     }
+
+    func perfectRoundsCount(sessions: [GameSession]) -> Int {
+        sessions.filter { $0.correctTiles > 0 && $0.correctTiles == $0.totalTiles }.count
+    }
+
     func formattedAccuracy(sessions: [GameSession]) -> String {
         (averageAccuracy(sessions: sessions) * 100.0).formatted(.number.precision(.fractionLength(1))) + "%"
     }

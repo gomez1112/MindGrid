@@ -96,13 +96,16 @@ struct StatsView: View {
         VStack(alignment: .leading) {
             Text("Key Metrics")
                 .font(.title2.bold())
-            HStack {
+            let columns = [
+                GridItem(.adaptive(minimum: 180), spacing: 16)
+            ]
+
+            LazyVGrid(columns: columns, spacing: 16) {
                 metricCard(title: "Games Played", value: metric.overallGamesPlayed(sessions: sessions).formatted(), icon: "gamecontroller.fill")
                 metricCard(title: "Avg. Grid Size", value: metric.formattedGridSize(sessions: sessions), icon: "grid.circle.fill")
-            }
-            HStack {
                 metricCard(title: "Avg. Time", value: metric.formattedTime(sessions: sessions), icon: "clock.fill")
                 metricCard(title: "Avg. Accuracy", value: metric.formattedAccuracy(sessions: sessions), icon: "target")
+                metricCard(title: "Perfect Rounds", value: metric.perfectRoundsCount(sessions: sessions).formatted(), icon: "checkmark.seal.fill")
             }
         }
     }

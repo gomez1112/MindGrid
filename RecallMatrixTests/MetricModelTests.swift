@@ -93,5 +93,44 @@ struct MetricModelTests {
         #expect(secondEntry.day == day1, "Next day should be day1.")
         #expect(secondEntry.count == 2, "Two sessions on day1.")
     }
-}
 
+    @Test
+    func testFilterLastFiveDaysUsesCalendarDays() {
+        let calendar = Calendar.current
+        let now = Date()
+        let today = calendar.startOfDay(for: now)
+        let startOfIncludedDay = calendar.date(byAdding: .day, value: -4, to: today)!
+        let sessionLateOnIncludedDay = GameSession(
+            date: calendar.date(byAdding: .hour, value: 1, to: startOfIncludedDay)!,
+            score: 0,
+            gridSize: 3,
+            correctTiles: 1,
+            totalTiles: 2,
+            elapsedTime: 10
+        )
+        let sessionBeforeWindow = GameSession(
+            date: calendar.date(byAdding: .second, value: -1, to: startOfIncludedDay)!,
+            score: 0,
+            gridSize: 3,
+            correctTiles: 1,
+            totalTiles: 2,
+            elapsedTime: 10
+        )
+
+        let filtered = metric.filterLastFiveDaysSessions(from: [sessionLateOnIncludedDay, sessionBeforeWindow])
+
+        #expect(filtered.count == 1)
+        #expect(filtered.first?.date == sessionLateOnIncludedDay.date)
+    }
+
+    @Test
+    func testPerfectRoundsCount() {
+        let sessions = [
+            GameSession(date: Date(), score: 10, gridSize: 3, correctTiles: 4, totalTiles: 4, elapsedTime: 12),
+            GameSession(date: Date(), score: 5, gridSize: 4, correctTiles: 3, totalTiles: 4, elapsedTime: 15),
+            GameSession(date: Date(), score: 8, gridSize: 5, correctTiles: 0, totalTiles: 0, elapsedTime: 9)
+        ]
+
+        #expect(metric.perfectRoundsCount(sessions: sessions) == 1)
+    }
+}

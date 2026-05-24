@@ -14,6 +14,7 @@ struct SettingsView: View {
     @AppStorage("HighestScore") private var highestScore = 0
     @AppStorage("TimerDuration") private var timerDuration = 30
     @State private var isShowingResetConfirmation = false
+    @State private var isShowingOnboarding = false
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -38,7 +39,10 @@ struct SettingsView: View {
                         .accessibilityHint("Toggle to enable or disable haptic vibrations.")
                 }
                 Section {
-                    NavigationLink(destination: OnboardingView()) {
+                    Button {
+                        hasSeenOnboarding = false
+                        isShowingOnboarding = true
+                    } label: {
                         HStack {
                             Spacer()
                             Text("Show Onboarding Again")
@@ -89,6 +93,9 @@ struct SettingsView: View {
                 Button("Reset", role: .destructive, action: resetSettings)
             } message: {
                 Text("Are you sure you want to reset all settings to default?")
+            }
+            .sheet(isPresented: $isShowingOnboarding) {
+                OnboardingView()
             }
             .formStyle(.grouped)
             .navigationTitle("Settings")

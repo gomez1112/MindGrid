@@ -67,6 +67,8 @@ struct GameFlowTests {
         model.gridSize = 5
         model.tiles = [Tile(id: 0), Tile(id: 1)]
         model.gameState = .result
+        model.lastRoundCorrect = true
+        model.highlightedTileIndices = [0, 1]
         
         model.resetGame()
         
@@ -75,6 +77,8 @@ struct GameFlowTests {
         #expect(model.gridSize == 3)
         #expect(model.tiles.isEmpty)
         #expect(model.gameState == .start)
+        #expect(!model.lastRoundCorrect)
+        #expect(model.highlightedTileIndices.isEmpty)
     }
     
     @Test
@@ -118,4 +122,3 @@ struct GameFlowTests {
         #expect(model.countdownValue == 3)
     }
 }
-
