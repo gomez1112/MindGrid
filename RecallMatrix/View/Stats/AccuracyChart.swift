@@ -20,7 +20,7 @@ struct AccuracyChart: View {
                     y: .value("Accuracy", session.accuracy * 100)
                 )
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
-                .foregroundStyle(.green)
+                .foregroundStyle(MatrixTheme.success)
                 #if os(visionOS)
                 .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))
                 #endif
@@ -44,9 +44,8 @@ struct AccuracyChart: View {
             }
         }
         .frame(minWidth: 200, minHeight: 250)
+        .chartForegroundStyleScale([
+            "Accuracy": MatrixTheme.success
+        ])
     }
-}
-
-#Preview(traits: .previewData) {
-    AccuracyChart(metric: MetricModel(), sessions: GameSession.examples)
 }

@@ -19,7 +19,7 @@ struct GamesPlayedChart: View {
                     x: .value("Date", entry.day),
                     y: .value("Count", entry.count)
                 )
-                .foregroundStyle(.orange)
+                .foregroundStyle(MatrixTheme.warning)
             }
         }
         .chartXAxis {
@@ -33,8 +33,4 @@ struct GamesPlayedChart: View {
             AxisMarks()
         }
     }
-}
-
-#Preview {
-    GamesPlayedChart(metric: MetricModel(), sessions: GameSession.examples)
 }

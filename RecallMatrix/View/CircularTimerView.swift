@@ -19,9 +19,9 @@ struct CircularTimerView: View {
 
     private var timerColor: Color {
         switch progress {
-        case 0.5...1.0: return .green
-        case 0.25..<0.5: return .yellow
-        default: return .red
+        case 0.5...1.0: return MatrixTheme.success
+        case 0.25..<0.5: return MatrixTheme.warning
+        default: return MatrixTheme.danger
         }
     }
 
@@ -32,7 +32,7 @@ struct CircularTimerView: View {
     var body: some View {
         ZStack {
             Circle()
-                .stroke(Color.gray.opacity(0.2), lineWidth: 8)
+                .stroke(MatrixTheme.separator, lineWidth: 8)
 
             Circle()
                 .trim(from: 0, to: progress)
@@ -46,6 +46,12 @@ struct CircularTimerView: View {
                 .contentTransition(.numericText())
         }
         .frame(width: 60, height: 60)
+        .padding(10)
+        .background(MatrixTheme.surfaceRaised.opacity(0.86), in: .circle)
+        .overlay {
+            Circle()
+                .stroke(MatrixTheme.separator, lineWidth: 1)
+        }
         .scaleEffect(isCritical && !reduceMotion ? 1.08 : 1.0)
         .animation(
             isCritical && !reduceMotion
@@ -54,13 +60,5 @@ struct CircularTimerView: View {
             value: isCritical
         )
         .accessibilityLabel("Time remaining: \(remainingTime) seconds")
-    }
-}
-
-#Preview {
-    VStack(spacing: 20) {
-        CircularTimerView(remainingTime: 25, totalTime: 30)
-        CircularTimerView(remainingTime: 10, totalTime: 30)
-        CircularTimerView(remainingTime: 3, totalTime: 30)
     }
 }

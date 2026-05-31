@@ -13,21 +13,16 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                gradientBackground
+                MatrixBackgroundView()
                 GridView()
-                    .navigationTitle("Recall Matrix")
             }
             .sheet(isPresented: Binding(
-                get: { !hasSeenOnboarding},
+                get: { !hasSeenOnboarding },
                 set: { hasSeenOnboarding = !$0 }
             )) {
                 OnboardingView()
             }
+            .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
-}
-
-#Preview {
-    ContentView()
-        .environment(GameModel())
 }

@@ -8,122 +8,119 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = true
-    @AppStorage("SoundEnabled") private var soundEnabled = true
-    @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
-    @AppStorage("HighestScore") private var highestScore = 0
-    @AppStorage("TimerDuration") private var timerDuration = 30
-    @State private var isShowingResetConfirmation = false
-    @State private var isShowingOnboarding = false
-    @Environment(\.dismiss) private var dismiss
+  @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = true
+  @AppStorage("SoundEnabled") private var soundEnabled = true
+  @AppStorage("HapticFeedback") private var hapticFeedbackEnabled = true
+  @AppStorage("HighestScore") private var highestScore = 0
+  @AppStorage("TimerDuration") private var timerDuration = 30
+  @State private var isShowingResetConfirmation = false
+  @State private var isShowingOnboarding = false
+  @Environment(\.dismiss) private var dismiss
 
-    var body: some View {
-        NavigationStack {
-            Form {
-                Section("Game Settings") {
-                    Stepper(value: $timerDuration, in: 1...30) {
-                        HStack {
-                            Text("Time per Round")
-                            Spacer()
-                            Text("^[\(timerDuration) second](inflect: true)")
-                                .foregroundStyle(.secondary)
-                        }
-                    }
-                    .accessibilityLabel("Time per Round")
-                    .accessibilityValue("^[\(timerDuration) second](inflect: true)")
-                    Toggle("Enable Sound", isOn: $soundEnabled)
-                        .accessibilityLabel("Enable Sound")
-                        .accessibilityHint("Toggle to enable or disable all game sounds.")
-                    Toggle("Enable Haptic Feedback", isOn: $hapticFeedbackEnabled)
-                        .accessibilityLabel("Enable Haptic Feedback")
-                        .accessibilityHint("Toggle to enable or disable haptic vibrations.")
-                }
-                Section {
-                    Button {
-                        hasSeenOnboarding = false
-                        isShowingOnboarding = true
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text("Show Onboarding Again")
-                                .foregroundStyle(Constant.Style.blueToPurple)
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .tint(.accentColor)
-                    .accessibilityLabel("Show Onboarding Again")
-                    .accessibilityHint("Show the initial instructions for playing the game.")
-                }
-                Section("Data Management") {
-                    Button("Clear High Score") {
-                        highestScore = 0
-                    }
-                    .foregroundStyle(Constant.Style.blueToPurple)
-                    .buttonStyle(.plain)
-                }
-                Section("About") {
-                    HStack {
-                        Text("Version")
-                        Spacer()
-                        Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
-                            .foregroundStyle(.secondary)
-                    }
-                    .accessibilityElement(children: .combine)
-                    .accessibilityLabel("App Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")")
-                }
-                Section {
-                    Button {
-                        isShowingResetConfirmation = true
-                    } label: {
-                        HStack {
-                            Spacer()
-                            Text("Reset Settings")
-                                .foregroundStyle(.red)
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Reset Settings")
-                    .accessibilityHint("Reset all game settings to their defaults.")
-                }
+  var body: some View {
+    NavigationStack {
+      ZStack {
+        MatrixBackgroundView()
+
+        ScrollView {
+          VStack(alignment: .leading, spacing: 18) {
+            VStack(alignment: .leading, spacing: 8) {
+              Text("Settings")
+                .font(.largeTitle.bold())
+                .foregroundStyle(MatrixTheme.ink)
+              Text("Tune the session length, feedback, and saved progress.")
+                .font(.headline)
+                .foregroundStyle(MatrixTheme.mutedInk)
             }
-            .alert("Reset Settings", isPresented: $isShowingResetConfirmation) {
-                Button("Cancel", role: .cancel) {}
-                Button("Reset", role: .destructive, action: resetSettings)
-            } message: {
-                Text("Are you sure you want to reset all settings to default?")
-            }
-            .sheet(isPresented: $isShowingOnboarding) {
-                OnboardingView()
-            }
-            .formStyle(.grouped)
-            .navigationTitle("Settings")
-            #if !os(macOS)
-            .navigationBarTitleDisplayMode(.inline)
-            #endif
-            .accessibilityLabel("Settings Screen")
-            .accessibilityElement(children: .contain)
-            .platform(for: .macOS) { $0.toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Dismiss") {
-                        dismiss()
-                    }
+            .padding(.top)
+
+            VStack(spacing: 18) {
+              Stepper(value: $timerDuration, in: 1...30) {
+                HStack {
+                  Label("Time per round", systemImage: "timer")
+                  Spacer()
+                  Text("^[\(timerDuration) second](inflect: true)")
+                    .font(.headline.monospacedDigit())
+                    .foregroundStyle(MatrixTheme.accent)
                 }
               }
-            }
-        }
-    }
-    private func resetSettings() {
-        timerDuration = 30
-        soundEnabled = true
-        hapticFeedbackEnabled = true
-        highestScore = 0
-        hasSeenOnboarding = false
-    }
-}
+              .accessibilityValue("^[\(timerDuration) second](inflect: true)")
 
-#Preview {
-    SettingsView()
-        .environment(GameModel())
+              Toggle("Enable sound", systemImage: "speaker.wave.2.fill", isOn: $soundEnabled)
+                .accessibilityHint("Toggle to enable or disable all game sounds.")
+
+              Toggle("Enable haptic feedback", systemImage: "hand.tap.fill", isOn: $hapticFeedbackEnabled)
+                .accessibilityHint("Toggle to enable or disable haptic vibrations.")
+            }
+            .tint(MatrixTheme.accent)
+            .matrixPanel()
+
+            VStack(spacing: 12) {
+              Button("Show onboarding again", systemImage: "questionmark.circle") {
+                hasSeenOnboarding = false
+                isShowingOnboarding = true
+              }
+              .buttonStyle(.bordered)
+              .tint(MatrixTheme.accent)
+
+              Button("Clear high score", systemImage: "crown.slash") {
+                highestScore = 0
+              }
+              .buttonStyle(.bordered)
+              .tint(MatrixTheme.warning)
+
+              Button("Reset settings", systemImage: "arrow.counterclockwise") {
+                isShowingResetConfirmation = true
+              }
+              .buttonStyle(MatrixActionButtonStyle(role: .destructive))
+            }
+            .controlSize(.large)
+            .matrixPanel()
+
+            HStack {
+              Text("Version")
+                .foregroundStyle(MatrixTheme.mutedInk)
+              Spacer()
+              Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0")
+                .font(.headline.monospacedDigit())
+                .foregroundStyle(MatrixTheme.ink)
+            }
+            .matrixPanel()
+            .accessibilityElement(children: .combine)
+          }
+          .frame(maxWidth: 620, alignment: .leading)
+          .padding()
+        }
+      }
+      .navigationTitle("Settings")
+      #if !os(macOS)
+      .navigationBarTitleDisplayMode(.inline)
+      #endif
+      .toolbarBackground(.hidden, for: .navigationBar)
+      .alert("Reset Settings", isPresented: $isShowingResetConfirmation) {
+        Button("Cancel", role: .cancel) {}
+        Button("Reset", role: .destructive, action: resetSettings)
+      } message: {
+        Text("Are you sure you want to reset all settings to default?")
+      }
+      .sheet(isPresented: $isShowingOnboarding) {
+        OnboardingView()
+      }
+      .platform(for: .macOS) { view in
+        view.toolbar {
+          ToolbarItem(placement: .cancellationAction) {
+            Button("Dismiss", action: dismiss.callAsFunction)
+          }
+        }
+      }
+    }
+  }
+
+  private func resetSettings() {
+    timerDuration = 30
+    soundEnabled = true
+    hapticFeedbackEnabled = true
+    highestScore = 0
+    hasSeenOnboarding = false
+  }
 }

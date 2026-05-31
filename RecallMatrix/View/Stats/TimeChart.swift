@@ -20,7 +20,7 @@ struct TimeChart: View {
                 )
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
                 .interpolationMethod(.catmullRom)
-                .foregroundStyle(.pink)
+                .foregroundStyle(MatrixTheme.danger)
                 #if os(visionOS)
                 .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))
                 #endif
@@ -43,8 +43,4 @@ struct TimeChart: View {
             }
         }
     }
-}
-
-#Preview {
-    TimeChart(metric: MetricModel(), sessions: GameSession.examples)
 }

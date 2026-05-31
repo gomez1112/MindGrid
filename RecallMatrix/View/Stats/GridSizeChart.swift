@@ -21,7 +21,7 @@ struct GridSizeChart: View {
                 )
                 .lineStyle(StrokeStyle(lineWidth: metric.lineWidth))
                 .interpolationMethod(.catmullRom)
-                .foregroundStyle(.blue)
+                .foregroundStyle(MatrixTheme.accent)
                 #if os(visionOS)
                 .symbol(Circle().strokeBorder(lineWidth: metric.lineWidth))
                 #endif
@@ -38,8 +38,4 @@ struct GridSizeChart: View {
             AxisMarks()
         }
     }
-}
-
-#Preview {
-    GridSizeChart(metric: MetricModel(), sessions: GameSession.examples)
 }

@@ -12,19 +12,20 @@ struct CountdownOverlayView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        Text("\(value)")
-            .font(.system(size: 72, weight: .bold, design: .rounded))
-            .foregroundStyle(Constant.Style.blueToPurple)
-            .contentTransition(.numericText())
-            .scaleEffect(reduceMotion ? 1.0 : 1.2)
-            .animation(
-                reduceMotion ? .none : .spring(response: 0.4, dampingFraction: 0.5),
-                value: value
-            )
-            .accessibilityLabel("Get ready: \(value)")
+        VStack(spacing: 8) {
+            Text("Memorize")
+                .font(.caption)
+                .foregroundStyle(MatrixTheme.mutedInk)
+            Text("\(value)")
+                .font(.system(.largeTitle, design: .rounded).bold().monospacedDigit())
+                .foregroundStyle(MatrixTheme.accentGradient)
+                .contentTransition(.numericText())
+                .scaleEffect(reduceMotion ? 1.0 : 1.18)
+        }
+        .animation(
+            reduceMotion ? .none : .spring(duration: 0.4, bounce: 0.5),
+            value: value
+        )
+        .accessibilityLabel("Get ready: \(value)")
     }
-}
-
-#Preview {
-    CountdownOverlayView(value: 3)
 }

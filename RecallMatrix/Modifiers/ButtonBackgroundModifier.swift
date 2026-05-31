@@ -11,14 +11,17 @@ import SwiftUI
 struct ButtonBackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .font(.system(size: 18, weight: .bold))
-            .foregroundStyle(.white)
-            .padding()
+            .font(.headline)
+            .foregroundStyle(MatrixTheme.backgroundTop)
+            .padding(.vertical)
+            .padding(.horizontal)
             .frame(maxWidth: .infinity)
-            .background(Constant.Style.blueToPurple)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .shadow(radius: 6)
-            .contentShape(Rectangle())
+            .background(MatrixTheme.accentGradient, in: .rect(cornerRadius: 16))
+            .overlay {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(.white.opacity(0.16), lineWidth: 1)
+            }
+            .contentShape(.rect)
     }
 }
 extension View {

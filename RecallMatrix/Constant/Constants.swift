@@ -10,7 +10,7 @@ import Foundation
 
 enum Constant {
     enum Style {
-        static let blueToPurple = LinearGradient(colors: [Color.blue, Color.purple], startPoint: .leading, endPoint: .trailing)
+        static let blueToPurple = MatrixTheme.accentGradient
     }
     
     enum Animation {
